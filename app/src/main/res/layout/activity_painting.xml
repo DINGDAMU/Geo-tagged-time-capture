@@ -47,15 +47,16 @@
         android:layout_height="wrap_content"
         android:text="Cancel"
         android:id="@+id/cancelPost"
-        android:layout_alignTop="@+id/savePost"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/locationText"
+        android:layout_alignEnd="@+id/locationText" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Retry"
         android:id="@+id/retryButton"
-        android:visibility="@+id/retryButton"
+        android:visibility="gone"
         android:layout_alignTop="@+id/cancelPost"
         android:layout_alignRight="@+id/image"
         android:layout_alignEnd="@+id/image" />
