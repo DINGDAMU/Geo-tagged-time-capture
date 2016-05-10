@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    >
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/listImage"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Coordinates Here"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/listImage"
+        android:layout_marginTop="20dp"
+        android:id="@+id/listCoordinates"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Address Here"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/listCoordinates"
+        android:id="@+id/listAddress"
+        android:layout_marginTop="10dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Time here"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/listTime"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/listAddress"
+        />
+
+
+</RelativeLayout>
