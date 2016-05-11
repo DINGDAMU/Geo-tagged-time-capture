@@ -73,6 +73,12 @@ public class Import extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
+
+        if (id == R.id.action_goback) {
+            Intent intent = new Intent();
+            intent.setClass(Import.this, MainActivity.class);
+            startActivity(intent);
+        }
         return super.onOptionsItemSelected(item);
     }
     //populates the list asynchronously
