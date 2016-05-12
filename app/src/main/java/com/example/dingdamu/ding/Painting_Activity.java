@@ -112,8 +112,8 @@ public class Painting_Activity extends AppCompatActivity {
             else {
 
                 String address = addresses.get(0).getAddressLine(0);
-                String city = addresses.get(0).getLocality();
-                String state = addresses.get(0).getCountryName();
+                String city = addresses.get(0).getAddressLine(1);
+                String state = addresses.get(0).getAddressLine(2);
                 resultAddr = address + "\n" + city + ", " + state;
                 locationText.setText(resultLatLong);
                 addressText.setText(resultAddr);
@@ -211,8 +211,8 @@ public class Painting_Activity extends AppCompatActivity {
             }
             else {
                 String address = addresses.get(0).getAddressLine(0);
-                String city = addresses.get(0).getLocality();
-                String state = addresses.get(0).getCountryName();
+                String city = addresses.get(0).getAddressLine(1);
+                String state = addresses.get(0).getAddressLine(2);
                 resultAddr = address + "\n" + city + ", " + state;
                 locationText.setText(resultLatLong);
                 addressText.setText(resultAddr);

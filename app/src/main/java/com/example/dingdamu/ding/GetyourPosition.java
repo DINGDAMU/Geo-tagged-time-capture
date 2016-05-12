@@ -1,6 +1,5 @@
 package com.example.dingdamu.ding;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
@@ -8,10 +7,8 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,7 +19,7 @@ import java.util.Locale;
 /**
  * Created by dingdamu on 11/05/16.
  */
-public class Gallery extends AppCompatActivity {
+public class GetyourPosition extends AppCompatActivity {
     TextView locationText, addressText;
     double latitude, longitude;
     Geocoder geocoder;
@@ -31,17 +28,18 @@ public class Gallery extends AppCompatActivity {
     LocationService service;
 
 
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.act_gallery);
-
-        service = new LocationService(Gallery.this);
+        setContentView(R.layout.act_getyourposition);
+        locationText = (TextView)findViewById(R.id.locationText1);
+        addressText = (TextView)findViewById(R.id.addressText1);
+        service = new LocationService(GetyourPosition.this);
         Location gpsLocation = service.getLocation(LocationManager.GPS_PROVIDER);
         if (gpsLocation != null) {
             latitude = gpsLocation.getLatitude();
             longitude = gpsLocation.getLongitude();
-            resultLatLong = "Latitude: " + gpsLocation.getLatitude() +
-                    " Longitude: " + gpsLocation.getLongitude();
+            resultLatLong = "Latitude: " + gpsLocation.getLatitude()+" \nLongitude: " + gpsLocation.getLongitude();
             geocoder = new Geocoder(this, Locale.getDefault());
 
             try {
@@ -51,14 +49,14 @@ public class Gallery extends AppCompatActivity {
             }
 
             if(addresses.isEmpty()||!isNetworkAvailable())
-            {                Toast.makeText(Gallery.this, "Could not get location !", Toast.LENGTH_SHORT).show();
+            {                Toast.makeText(GetyourPosition.this, "Could not get location !", Toast.LENGTH_SHORT).show();
 
             }
             else {
 
                 String address = addresses.get(0).getAddressLine(0);
-                String city = addresses.get(0).getLocality();
-                String state = addresses.get(0).getCountryName();
+                String city = addresses.get(0).getAddressLine(1);
+                String state = addresses.get(0).getAddressLine(2);
                 resultAddr = address + "\n" + city + ", " + state;
                 locationText.setText(resultLatLong);
                 addressText.setText(resultAddr);
@@ -66,7 +64,7 @@ public class Gallery extends AppCompatActivity {
         }
         else
         {
-            Toast.makeText(Gallery.this,"Could not get location !",Toast.LENGTH_SHORT).show();
+            Toast.makeText(GetyourPosition.this,"Could not get location !",Toast.LENGTH_SHORT).show();
         }
     }
 
