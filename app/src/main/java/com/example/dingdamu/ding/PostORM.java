@@ -62,6 +62,7 @@ public class PostORM {
         return uris;
     }
 
+
     public ArrayList<String> getCoordinatesfromDB(Context c)
     {
         DatabaseWrapper databaseWrapper = new DatabaseWrapper(c);
@@ -99,6 +100,64 @@ public class PostORM {
             times.add(cur.getString(3));
         }
         return times;
+    }
+    public ArrayList<String> getNeededUrifromDB(Context c,String address)
+    {
+        DatabaseWrapper databaseWrapper = new DatabaseWrapper(c);
+        myDataBase = databaseWrapper.getWritableDatabase();
+        ArrayList<String> uri_now = new ArrayList<String>();
+
+        Cursor cur = myDataBase.rawQuery("SELECT * from post where address = ?",new String[] {address});
+        for(cur.moveToFirst();!cur.isAfterLast();cur.moveToNext())
+        {
+            uri_now.add(cur.getString(0));
+
+        }
+        return uri_now;
+    }
+
+    public ArrayList<String> getNeededCoordinatesfromDB(Context c,String address)
+    {
+        DatabaseWrapper databaseWrapper = new DatabaseWrapper(c);
+        myDataBase = databaseWrapper.getWritableDatabase();
+        ArrayList<String> coordinates_now = new ArrayList<String>();
+
+        Cursor cur = myDataBase.rawQuery("SELECT * from post where address =?",new String[] {address});
+        for(cur.moveToFirst();!cur.isAfterLast();cur.moveToNext())
+        {
+            coordinates_now.add(cur.getString(1));
+
+        }
+        return coordinates_now;
+    }
+    public ArrayList<String> getNeededAddressfromDB(Context c,String address)
+    {
+        DatabaseWrapper databaseWrapper = new DatabaseWrapper(c);
+        myDataBase = databaseWrapper.getWritableDatabase();
+        ArrayList<String> addresses_now = new ArrayList<String>();
+
+        Cursor cur = myDataBase.rawQuery("SELECT * from post where address =?",new String[] {address});
+        for(cur.moveToFirst();!cur.isAfterLast();cur.moveToNext())
+        {
+            addresses_now.add(cur.getString(2));
+
+        }
+        return addresses_now;
+    }
+
+    public ArrayList<String> getNeededTimefromDB(Context c,String address)
+    {
+        DatabaseWrapper databaseWrapper = new DatabaseWrapper(c);
+        myDataBase = databaseWrapper.getWritableDatabase();
+        ArrayList<String> time_now = new ArrayList<String>();
+
+        Cursor cur = myDataBase.rawQuery("SELECT * from post where address =?",new String[] {address});
+        for(cur.moveToFirst();!cur.isAfterLast();cur.moveToNext())
+        {
+            time_now.add(cur.getString(3));
+
+        }
+        return time_now;
     }
 
 

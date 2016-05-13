@@ -77,7 +77,7 @@ public class Painting_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(Painting_Activity.this,"Post Discarded",Toast.LENGTH_SHORT).show();
-                Intent i = new Intent(Painting_Activity.this,Import.class);
+                Intent i = new Intent(Painting_Activity.this,MainActivity.class);
                 startActivity(i);
             }
         });

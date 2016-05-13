@@ -35,27 +35,36 @@ public class PostAdapter extends BaseAdapter {
         this.address = address;
         this.time = time;
     }
+    //public int getCount() 得到数据的行数
 
     @Override
     public int getCount() {
         return uri.size();
     }
 
+    //public Object getItem(int position) 根据position得到某一行的记录
     @Override
     public Object getItem(int position) {
         return uri.get(position);
     }
 
+    // public long getItemId(int position) 得到某一条记录的ID
     @Override
     public long getItemId(int position) {
         return position;
     }
 
+    //自己的适配器，可以自定义布局
     public View getView(int position, View convertView, ViewGroup parent) {
         View row = convertView;
         PostHolder holder = null;
         if(row == null)
         {
+            //在实际开发中LayoutInflater这个类还是非常有用的，它的作用类似于findViewById()。
+            // 不同点是LayoutInflater是用来找res/layout/下的xml布局文件，并且实例化；
+            // 而findViewById()是找xml布局文件下的具体widget控件(如Button、TextView等)。
+            //1、对于一个没有被载入或者想要动态载入的界面，都需要使用LayoutInflater.inflate()来载入；
+            //2、对于一个已经载入的界面，就可以使用Activiy.findViewById()方法来获得其中的界面元素。
             LayoutInflater inflater = ((Activity)context).getLayoutInflater();
             row = inflater.inflate(layoutResourceId, parent, false);
             holder = new PostHolder();
