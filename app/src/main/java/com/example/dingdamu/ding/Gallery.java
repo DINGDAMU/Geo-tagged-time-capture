@@ -50,6 +50,8 @@ public class Gallery extends AppCompatActivity {
     List<Address> addresses;
     String resultLatLong;
     LocationService service;
+    int index=0;
+
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,8 +59,11 @@ public class Gallery extends AppCompatActivity {
         setContentView(R.layout.act_gallery);
         mNext = (Button)findViewById(R.id.next_pic);
         mBack = (Button)findViewById(R.id.pre_pic);
-        service = new LocationService(Gallery.this);
         showImage= (ImageView) findViewById(R.id.listImage);
+
+
+
+        service = new LocationService(Gallery.this);
         Location gpsLocation = service.getLocation(LocationManager.GPS_PROVIDER);
         if (gpsLocation != null) {
             latitude = gpsLocation.getLatitude();
@@ -81,12 +86,7 @@ public class Gallery extends AppCompatActivity {
                         +addresses.get(0).getAddressLine(2);
                 Toast.makeText(Gallery.this,address,Toast.LENGTH_SHORT).show();
                 sqluri=p.getNeededUrifromDB(Gallery.this,address);
-                //Toast.makeText(Gallery.this,sqluri.get(0),Toast.LENGTH_SHORT).show();
-                //Studentato San Bartolomeo
-                //38123 特伦特, 意大利
 
-                //sqluri = p.getUrifromDB(Gallery.this);
-                //Toast.makeText(Gallery.this,sqluri.get(0),Toast.LENGTH_SHORT).show();
 
                 //sqlcoordinate = p.getNeededCoordinatesfromDB(Gallery.this,address);
                 //sqladdress = p.getNeededAddressfromDB(Gallery.this,address);
@@ -98,7 +98,7 @@ public class Gallery extends AppCompatActivity {
 
 
                 }else{
-                    Picasso.with(this).load(sqluri.get(0)).placeholder(R.drawable.placeholder).resize(500,500).into(showImage);
+                    Picasso.with(this).load(sqluri.get(index)).placeholder(R.drawable.placeholder).resize(1500,1500).into(showImage);
 
 
 
@@ -120,11 +120,27 @@ public class Gallery extends AppCompatActivity {
         mNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(index == sqluri.size()-1){
+                    index = 0;
+                }
+                else{
+                    index++;
+                }
+                Picasso.with(Gallery.this).load(sqluri.get(index)).placeholder(R.drawable.placeholder).resize(1500,1500).into(showImage);
+
             }
         });
+
         mBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(index == 0){
+                    index = sqluri.size()-1;
+                }
+                else{
+                    index--;
+                }
+                Picasso.with(Gallery.this).load(sqluri.get(index)).placeholder(R.drawable.placeholder).resize(1500,1500).into(showImage);
             }
         });
     }
@@ -184,4 +200,6 @@ public class Gallery extends AppCompatActivity {
         }
         return false;
     }
+
+
 }
