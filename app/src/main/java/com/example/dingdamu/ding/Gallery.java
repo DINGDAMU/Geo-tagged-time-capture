@@ -21,6 +21,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
@@ -43,6 +44,7 @@ public class Gallery extends AppCompatActivity {
     ListView feedList;
     PostAdapter adapter;
     ImageView showImage;
+    TextView showTime;
 
 
     double latitude, longitude;
@@ -60,6 +62,8 @@ public class Gallery extends AppCompatActivity {
         mNext = (Button)findViewById(R.id.next_pic);
         mBack = (Button)findViewById(R.id.pre_pic);
         showImage= (ImageView) findViewById(R.id.listImage);
+        showTime=(TextView)findViewById(R.id.listTime);
+
 
 
 
@@ -90,7 +94,7 @@ public class Gallery extends AppCompatActivity {
 
                 //sqlcoordinate = p.getNeededCoordinatesfromDB(Gallery.this,address);
                 //sqladdress = p.getNeededAddressfromDB(Gallery.this,address);
-                //sqltime = p.getNeededTimefromDB(Gallery.this,address);
+                sqltime = p.getNeededTimefromDB(Gallery.this,address);
                 //Toast.makeText(Gallery.this,"Finish reading the database",Toast.LENGTH_SHORT).show();
 
                 if(sqluri.isEmpty()) {
@@ -98,7 +102,8 @@ public class Gallery extends AppCompatActivity {
 
 
                 }else{
-                    Picasso.with(this).load(sqluri.get(index)).placeholder(R.drawable.placeholder).resize(1500,1500).into(showImage);
+                    Picasso.with(this).load(sqluri.get(index)).placeholder(R.drawable.placeholder).resize(1000,1000).into(showImage);
+                    showTime.setText(sqltime.get(index));
 
 
 
@@ -126,8 +131,8 @@ public class Gallery extends AppCompatActivity {
                 else{
                     index++;
                 }
-                Picasso.with(Gallery.this).load(sqluri.get(index)).placeholder(R.drawable.placeholder).resize(1500,1500).into(showImage);
-
+                Picasso.with(Gallery.this).load(sqluri.get(index)).placeholder(R.drawable.placeholder).resize(1000,1000).into(showImage);
+                showTime.setText(sqltime.get(index));
             }
         });
 
@@ -140,7 +145,9 @@ public class Gallery extends AppCompatActivity {
                 else{
                     index--;
                 }
-                Picasso.with(Gallery.this).load(sqluri.get(index)).placeholder(R.drawable.placeholder).resize(1500,1500).into(showImage);
+                Picasso.with(Gallery.this).load(sqluri.get(index)).placeholder(R.drawable.placeholder).resize(1000,1000).into(showImage);
+                showTime.setText(sqltime.get(index));
+
             }
         });
     }

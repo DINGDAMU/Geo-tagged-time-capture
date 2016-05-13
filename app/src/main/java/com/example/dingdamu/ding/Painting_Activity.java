@@ -125,7 +125,7 @@ public class Painting_Activity extends AppCompatActivity {
             mSave.setVisibility(View.GONE);
             mRetry.setVisibility(View.VISIBLE);
         }
-        Picasso.with(this).load(imageUri.toString()).placeholder(R.drawable.placeholder).resize(500,500).into(cameraImage);
+        Picasso.with(this).load(imageUri.toString()).placeholder(R.drawable.placeholder).resize(1000,1000).into(cameraImage);
 
     }
 
