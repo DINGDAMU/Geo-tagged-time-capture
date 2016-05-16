@@ -53,6 +53,7 @@ public class Gallery extends AppCompatActivity {
     String resultLatLong;
     LocationService service;
     int index=0;
+    TextView showIndex;
 
 
 
@@ -63,6 +64,7 @@ public class Gallery extends AppCompatActivity {
         mBack = (Button)findViewById(R.id.pre_pic);
         showImage= (ImageView) findViewById(R.id.listImage);
         showTime=(TextView)findViewById(R.id.listTime);
+        showIndex=(TextView)findViewById(R.id.index);
 
 
 
@@ -103,7 +105,9 @@ public class Gallery extends AppCompatActivity {
 
                 }else{
                     Picasso.with(this).load(sqluri.get(index)).placeholder(R.drawable.placeholder).resize(1000,1000).into(showImage);
+                    showIndex.setText("Image Number:"+(index+1));
                     showTime.setText(sqltime.get(index));
+
 
 
 
@@ -126,13 +130,16 @@ public class Gallery extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(index == sqluri.size()-1){
+                    Toast.makeText(Gallery.this,"This is the last image, jump to the first",Toast.LENGTH_SHORT).show();
                     index = 0;
                 }
                 else{
                     index++;
                 }
                 Picasso.with(Gallery.this).load(sqluri.get(index)).placeholder(R.drawable.placeholder).resize(1000,1000).into(showImage);
+                showIndex.setText("Image Number:"+(index+1));
                 showTime.setText(sqltime.get(index));
+
             }
         });
 
@@ -140,13 +147,16 @@ public class Gallery extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(index == 0){
+                    Toast.makeText(Gallery.this,"This is the first image,jump to the last image",Toast.LENGTH_SHORT).show();
                     index = sqluri.size()-1;
                 }
                 else{
                     index--;
                 }
                 Picasso.with(Gallery.this).load(sqluri.get(index)).placeholder(R.drawable.placeholder).resize(1000,1000).into(showImage);
+                showIndex.setText("Image Number:"+(index+1));
                 showTime.setText(sqltime.get(index));
+
 
             }
         });
@@ -157,46 +167,7 @@ public class Gallery extends AppCompatActivity {
 
 
 
-    public class SQLTask extends AsyncTask<String,String,ArrayList<ArrayList<String>>>
-    {
-        private ProgressDialog pDialog;
 
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            pDialog = new ProgressDialog(Gallery.this);
-            pDialog.setMessage("Loading your feed ...");
-            pDialog.setIndeterminate(false);
-            pDialog.setCancelable(true);
-            pDialog.show();
-        }
-
-
-        @Override
-        protected ArrayList<ArrayList<String>> doInBackground(String... params) {
-
-            holder.add(sqluri);
-            holder.add(sqlcoordinate);
-            holder.add(sqladdress);
-            holder.add(sqltime);
-            return holder;
-        }
-
-
-        @Override
-        protected void onPostExecute(ArrayList<ArrayList<String>> arrayLists) {
-            ArrayList<String> uris = sqluri;
-            ArrayList<String> coordinates = sqlcoordinate;
-            ArrayList<String> addresses = sqladdress;
-            ArrayList<String> times = sqltime;
-            adapter = new PostAdapter(Gallery.this,R.layout.list_item,uris,coordinates,addresses,times);
-            feedList.setAdapter(adapter);
-            adapter.notifyDataSetChanged();
-            pDialog.dismiss();
-
-        }
-    }
     public boolean isNetworkAvailable() {
         ConnectivityManager cm = (ConnectivityManager)
                 getSystemService(Context.CONNECTIVITY_SERVICE);

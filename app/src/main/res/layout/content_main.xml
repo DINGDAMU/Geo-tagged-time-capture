@@ -12,8 +12,28 @@
     tools:context="com.example.dingdamu.ding.MainActivity"
     tools:showIn="@layout/app_bar_main">
 
+    <ImageView
+        android:id="@+id/main_image_dial"
+        android:layout_width="320dp"
+        android:layout_height="320dp"
+        android:layout_centerInParent="true"
+        android:contentDescription="@string/compass_dial"
+        android:src="@drawable/dial" />
+
+
+    <ImageView
+        android:id="@+id/main_image_hands"
+        android:layout_width="20dp"
+        android:layout_height="240dp"
+        android:layout_centerInParent="true"
+        android:contentDescription="@string/compass_hands"
+        android:scaleType="fitXY"
+        android:src="@drawable/hands" />
+
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/content" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/compass_information"
+        />
+
 </RelativeLayout>

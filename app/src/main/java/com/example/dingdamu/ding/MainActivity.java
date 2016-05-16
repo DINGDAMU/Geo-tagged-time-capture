@@ -13,9 +13,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+    private Compass compass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,14 +27,13 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Copyright by Ding Damu", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        Compass.mText=(TextView) findViewById(R.id.compass_information);
+
+        compass = new Compass(this);
+        compass.arrowView = (ImageView) findViewById(R.id.main_image_hands);
+
+
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -74,6 +76,31 @@ public class MainActivity extends AppCompatActivity
 
         return super.onOptionsItemSelected(item);
     }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        compass.start();
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        compass.stop();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        compass.start();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        compass.stop();
+    }
+
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override

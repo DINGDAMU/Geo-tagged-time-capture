@@ -15,4 +15,6 @@
     <string name="email">damu.ding@studenti.unitn.it</string>
     <string name="content">丁大牧帅的一比</string>
     <string name="goback">return to the homepage</string>
+    <string name="compass_dial">Compass Dial</string>
+    <string name="compass_hands">Compass Hands</string>
 </resources>
