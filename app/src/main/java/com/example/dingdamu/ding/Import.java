@@ -11,7 +11,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.os.Bundle;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -66,7 +65,7 @@ public class Import extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_import, menu);
         return true;
     }
 

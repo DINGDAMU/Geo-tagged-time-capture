@@ -18,7 +18,6 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    private Compass compass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,10 +26,7 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        Compass.mText=(TextView) findViewById(R.id.compass_information);
 
-        compass = new Compass(this);
-        compass.arrowView = (ImageView) findViewById(R.id.main_image_hands);
 
 
 
@@ -76,30 +72,7 @@ public class MainActivity extends AppCompatActivity
 
         return super.onOptionsItemSelected(item);
     }
-    @Override
-    protected void onStart() {
-        super.onStart();
-        compass.start();
 
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        compass.stop();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        compass.start();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        compass.stop();
-    }
 
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -123,6 +96,9 @@ public class MainActivity extends AppCompatActivity
             intent.setClass(MainActivity.this, Gallery.class);
             startActivity(intent);
         } else if (id == R.id.nav_manage) {
+            Intent intent = new Intent();
+            intent.setClass(MainActivity.this, Compass_Activity.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_share) {
 
