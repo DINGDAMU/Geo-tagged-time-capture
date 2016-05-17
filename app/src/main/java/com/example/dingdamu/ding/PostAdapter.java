@@ -24,9 +24,8 @@ public class PostAdapter extends BaseAdapter {
     ArrayList<String> coordinate = new ArrayList<String>();
     ArrayList<String> address = new ArrayList<String>();
     ArrayList<String> time = new ArrayList<String>();
-    ArrayList<String> compass=new ArrayList<>();
 
-    public PostAdapter(Context c,int layoutResourceId,ArrayList<String> uri,ArrayList<String> coordinate,ArrayList<String> address,ArrayList<String> time,ArrayList<String> compass)
+    public PostAdapter(Context c,int layoutResourceId,ArrayList<String> uri,ArrayList<String> coordinate,ArrayList<String> address,ArrayList<String> time)
     {
 
         this.context = c;
@@ -35,7 +34,6 @@ public class PostAdapter extends BaseAdapter {
         this.coordinate = coordinate;
         this.address = address;
         this.time = time;
-        this.compass=compass;
     }
     //public int getCount() 得到数据的行数
 
@@ -74,7 +72,6 @@ public class PostAdapter extends BaseAdapter {
             holder.txtTitle = (TextView)row.findViewById(R.id.listCoordinates);
             holder.txtTitle2 = (TextView)row.findViewById(R.id.listAddress);
             holder.txtTitle3 = (TextView)row.findViewById(R.id.listTime);
-            holder.txtTitle4 =(TextView)row.findViewById(R.id.listCompass);
             row.setTag(holder);
         }
         else
@@ -86,8 +83,6 @@ public class PostAdapter extends BaseAdapter {
         holder.txtTitle.setText(coordinate.get(position));
         holder.txtTitle2.setText(address.get(position));
         holder.txtTitle3.setText(time.get(position));
-        holder.txtTitle4.setText(compass.get(position));
-
         return row;
     }
 
@@ -98,6 +93,5 @@ public class PostAdapter extends BaseAdapter {
         TextView txtTitle;
         TextView txtTitle2;
         TextView txtTitle3;
-        TextView txtTitle4;
     }
 }

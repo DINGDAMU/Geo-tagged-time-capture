@@ -38,7 +38,7 @@ import java.util.Locale;
 public class Gallery extends AppCompatActivity {
 
     Button mNext,mBack;
-    ArrayList<String> sqluri,sqlcoordinate,sqladdress,sqltime,sqlcompass;
+    ArrayList<String> sqluri,sqlcoordinate,sqladdress,sqltime;
     PostORM p = new PostORM();
     ArrayList<ArrayList<String>> holder;
     ListView feedList;
@@ -54,8 +54,6 @@ public class Gallery extends AppCompatActivity {
     LocationService service;
     int index=0;
     TextView showIndex;
-    TextView showCompass;
-
 
 
 
@@ -67,9 +65,6 @@ public class Gallery extends AppCompatActivity {
         showImage= (ImageView) findViewById(R.id.listImage);
         showTime=(TextView)findViewById(R.id.listTime);
         showIndex=(TextView)findViewById(R.id.index);
-        showCompass=(TextView)findViewById(R.id.listCompass);
-
-
 
 
 
@@ -97,7 +92,7 @@ public class Gallery extends AppCompatActivity {
                         +addresses.get(0).getAddressLine(2);
                 Toast.makeText(Gallery.this,address,Toast.LENGTH_SHORT).show();
                 sqluri=p.getNeededUrifromDB(Gallery.this,address);
-                sqlcompass=p.getNeededCompassfromDB(Gallery.this,address);
+
 
                 //sqlcoordinate = p.getNeededCoordinatesfromDB(Gallery.this,address);
                 //sqladdress = p.getNeededAddressfromDB(Gallery.this,address);
@@ -106,19 +101,12 @@ public class Gallery extends AppCompatActivity {
 
                 if(sqluri.isEmpty()) {
                     Toast.makeText(Gallery.this,"No matching pictures!",Toast.LENGTH_SHORT).show();
-                    mBack.setVisibility(View.INVISIBLE);
-                    mNext.setVisibility(View.INVISIBLE);
 
 
                 }else{
                     Picasso.with(this).load(sqluri.get(index)).placeholder(R.drawable.placeholder).resize(1000,1000).into(showImage);
                     showIndex.setText("Image Number:"+(index+1));
                     showTime.setText(sqltime.get(index));
-                    showCompass.setText(sqlcompass.get(index));
-
-                    mBack.setVisibility(View.VISIBLE);
-                    mNext.setVisibility(View.VISIBLE);
-
                     service.removeUpdates();
                     service.unregisterlistener();
 
@@ -133,8 +121,6 @@ public class Gallery extends AppCompatActivity {
         else
         {
             Toast.makeText(Gallery.this,"Could not get location !",Toast.LENGTH_SHORT).show();
-            mBack.setVisibility(View.INVISIBLE);
-            mNext.setVisibility(View.INVISIBLE);
         }
 
 
@@ -171,7 +157,6 @@ public class Gallery extends AppCompatActivity {
                 Picasso.with(Gallery.this).load(sqluri.get(index)).placeholder(R.drawable.placeholder).resize(1000,1000).into(showImage);
                 showIndex.setText("Image Number:"+(index+1));
                 showTime.setText(sqltime.get(index));
-                showCompass.setText(sqlcompass.get(index));
 
 
             }

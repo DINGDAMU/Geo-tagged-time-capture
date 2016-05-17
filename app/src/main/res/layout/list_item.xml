@@ -37,15 +37,6 @@
         android:layout_marginTop="10dp"
         android:layout_below="@+id/listAddress"
         />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Compass here"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/listCompass"
-        android:layout_marginTop="10dp"
-        android:layout_below="@+id/listTime"
-        />
 
 
 </RelativeLayout>

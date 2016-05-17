@@ -43,9 +43,6 @@ public class Painting_Activity extends AppCompatActivity {
     Button mSave,mCancel,mRetry;
     PostORM p = new PostORM();
     LocationService service;
-    String com;
-    private Compass compass1;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,13 +59,12 @@ public class Painting_Activity extends AppCompatActivity {
         Time today = new Time(Time.getCurrentTimezone());
         today.setToNow();
         final String updated = "Updated : "+today.monthDay+"-"+(today.month+1)+"-"+today.year+"   "+today.format("%k:%M:%S");
-        compass1= new Compass(this);
-        com=compass1.getCompass_information();
+
         imageUri = getIntent().getData();
         mSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                p.insertPost(Painting_Activity.this, imageUri.toString(), resultLatLong, resultAddr,updated,com);
+                p.insertPost(Painting_Activity.this, imageUri.toString(), resultLatLong, resultAddr,updated);
                 p.getAddressfromDB(Painting_Activity.this);
                 p.getCoordinatesfromDB(Painting_Activity.this);
                 Toast.makeText(Painting_Activity.this, "Created new Post", Toast.LENGTH_SHORT).show();
