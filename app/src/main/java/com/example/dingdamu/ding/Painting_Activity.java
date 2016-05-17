@@ -142,7 +142,7 @@ public class Painting_Activity extends AppCompatActivity {
                 getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = cm.getActiveNetworkInfo();
 
-        if (networkInfo != null && networkInfo.isConnected()) {
+        if (networkInfo.isConnected()) {
             return true;
         }
         return false;
