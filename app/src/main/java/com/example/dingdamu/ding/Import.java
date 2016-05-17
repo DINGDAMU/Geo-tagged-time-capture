@@ -29,7 +29,7 @@ import java.util.Locale;
 public class Import extends AppCompatActivity {
     Uri imageUri;
     int IMAGE_CONST = 1;
-    ArrayList<String> sqluri,sqlcoordinate,sqladdress,sqltime;
+    ArrayList<String> sqluri,sqlcoordinate,sqladdress,sqltime,sqlcompass;
     PostORM p = new PostORM();
     ArrayList<ArrayList<String>> holder;
     ListView feedList;
@@ -44,6 +44,7 @@ public class Import extends AppCompatActivity {
         sqladdress = new ArrayList<>();
         sqlcoordinate = new ArrayList<>();
         sqltime = new ArrayList<>();
+        sqlcompass=new ArrayList<>();
         feedList = (ListView)findViewById(R.id.feedList);
         holder = new ArrayList<ArrayList<String>>();
         //拍照
@@ -103,10 +104,12 @@ public class Import extends AppCompatActivity {
             sqlcoordinate = p.getCoordinatesfromDB(Import.this);
             sqladdress = p.getAddressfromDB(Import.this);
             sqltime = p.getTimefromDB(Import.this);
+            sqlcompass=p.getCompassfromDB(Import.this);
             holder.add(sqluri);
             holder.add(sqlcoordinate);
             holder.add(sqladdress);
             holder.add(sqltime);
+            holder.add(sqlcompass);
             return holder;
         }
 
@@ -119,7 +122,8 @@ public class Import extends AppCompatActivity {
             ArrayList<String> coordinates = sqlcoordinate;
             ArrayList<String> addresses = sqladdress;
             ArrayList<String> times = sqltime;
-            adapter = new PostAdapter(Import.this,R.layout.list_item,uris,coordinates,addresses,times);
+            ArrayList<String> compasses=sqlcompass;
+            adapter = new PostAdapter(Import.this,R.layout.list_item,uris,coordinates,addresses,times,compasses);
             feedList.setAdapter(adapter);
             adapter.notifyDataSetChanged();
             pDialog.dismiss();

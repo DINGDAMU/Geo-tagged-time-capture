@@ -13,11 +13,13 @@ import java.util.ArrayList;
  */
 public class PostORM {
     private static final String TAG = "PostORM";
-    public static final String TABLE_NAME = "post";
+    public static final String TABLE_NAME = "post1";
     private static final String COLUMN_URI = "uri";
     private static final String COLUMN_COORDINATES = "coordinates";
     private static final String COLUMN_ADDRESS = "address";
     private static final String COLUMN_TIME = "time";
+    private static final String COLUMN_COMPASS = "compass";
+
     private DatabaseWrapper dw;
     SQLiteDatabase myDataBase;
 
@@ -26,12 +28,12 @@ public class PostORM {
                     + COLUMN_URI + " TEXT, "
                     + COLUMN_COORDINATES + " TEXT, "
                     + COLUMN_ADDRESS + " TEXT, "
-                    + COLUMN_TIME + " TEXT)";
+                    + COLUMN_TIME + " TEXT, "+COLUMN_COMPASS+" TEXT)";
 
     public static final String SQL_DROP_TABLE =
             "DROP TABLE IF EXISTS " + TABLE_NAME;
 
-    public int insertPost(Context c, String uri, String coordinates, String address, String time)
+    public int insertPost(Context c, String uri, String coordinates, String address, String time,String compass)
     {
         DatabaseWrapper databaseWrapper = new DatabaseWrapper(c);
         myDataBase = databaseWrapper.getWritableDatabase();
@@ -42,6 +44,7 @@ public class PostORM {
             values.put(PostORM.COLUMN_COORDINATES,coordinates);
             values.put(PostORM.COLUMN_ADDRESS,address);
             values.put(PostORM.COLUMN_TIME,time);
+            values.put(PostORM.COLUMN_COMPASS,compass);
             postId = myDataBase.insert(PostORM.TABLE_NAME, "null", values);
             Log.e(TAG, "Inserted new Post with ID: " + postId);
             myDataBase.close();
@@ -101,6 +104,20 @@ public class PostORM {
         }
         return times;
     }
+
+    public ArrayList<String> getCompassfromDB(Context c)
+    {
+        DatabaseWrapper databaseWrapper = new DatabaseWrapper(c);
+        myDataBase = databaseWrapper.getWritableDatabase();
+        ArrayList<String> compass = new ArrayList<String>();
+        Cursor cur = myDataBase.rawQuery("SELECT * from post",null);
+        for(cur.moveToFirst();!cur.isAfterLast();cur.moveToNext())
+        {
+            compass.add(cur.getString(4));
+        }
+        return compass;
+    }
+
     public ArrayList<String> getNeededUrifromDB(Context c,String address)
     {
         DatabaseWrapper databaseWrapper = new DatabaseWrapper(c);
@@ -130,6 +147,7 @@ public class PostORM {
         }
         return coordinates_now;
     }
+
     public ArrayList<String> getNeededAddressfromDB(Context c,String address)
     {
         DatabaseWrapper databaseWrapper = new DatabaseWrapper(c);
@@ -158,6 +176,21 @@ public class PostORM {
 
         }
         return time_now;
+    }
+
+    public ArrayList<String> getNeededCompassfromDB(Context c,String address)
+    {
+        DatabaseWrapper databaseWrapper = new DatabaseWrapper(c);
+        myDataBase = databaseWrapper.getWritableDatabase();
+        ArrayList<String> compass = new ArrayList<String>();
+
+        Cursor cur = myDataBase.rawQuery("SELECT * from post where address =?",new String[] {address});
+        for(cur.moveToFirst();!cur.isAfterLast();cur.moveToNext())
+        {
+            compass.add(cur.getString(4));
+
+        }
+        return compass;
     }
 
 
