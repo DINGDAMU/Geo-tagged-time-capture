@@ -85,6 +85,8 @@ public class Gallery extends AppCompatActivity {
 
             if(addresses.isEmpty()||!isNetworkAvailable()) {
                 Toast.makeText(Gallery.this, "Location not found!", Toast.LENGTH_SHORT).show();
+                mBack.setVisibility(View.INVISIBLE);
+                mNext.setVisibility(View.INVISIBLE);
             }
             else{
 
@@ -105,9 +107,11 @@ public class Gallery extends AppCompatActivity {
 
                 }else{
                     Picasso.with(this).load(sqluri.get(index)).placeholder(R.drawable.placeholder).resize(1000,1000).into(showImage);
-                    showIndex.setText("Image Number:"+(index+1));
+                    String index_new="Image Number:"+(index+1);
+                    showIndex.setText(index_new);
                     showTime.setText(sqltime.get(index));
-
+                    mBack.setVisibility(View.VISIBLE);
+                    mNext.setVisibility(View.VISIBLE);
 
 
 
@@ -115,11 +119,16 @@ public class Gallery extends AppCompatActivity {
 
                 }
 
+
             }
+
+
         }
         else
         {
             Toast.makeText(Gallery.this,"Could not get location !",Toast.LENGTH_SHORT).show();
+            mBack.setVisibility(View.INVISIBLE);
+            mNext.setVisibility(View.INVISIBLE);
         }
 
 
