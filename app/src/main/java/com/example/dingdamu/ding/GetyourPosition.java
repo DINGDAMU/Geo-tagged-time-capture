@@ -66,6 +66,8 @@ public class GetyourPosition extends AppCompatActivity {
         {
             Toast.makeText(GetyourPosition.this,"Could not get location !",Toast.LENGTH_SHORT).show();
         }
+        service.removeUpdates();
+        service.unregisterlistener();
     }
 
     public boolean isNetworkAvailable() {

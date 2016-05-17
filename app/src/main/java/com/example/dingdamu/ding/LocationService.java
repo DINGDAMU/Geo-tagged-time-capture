@@ -17,6 +17,8 @@ public class LocationService extends Service implements LocationListener {
     Location location;
     private static final long MIN_DISTANCE_FOR_UPDATE = 10;
     private static final long MIN_TIME_FOR_UPDATE = 1000 * 60 * 2;
+    LocationListener listener;
+
 
     public LocationService(Context context)
     {
@@ -37,6 +39,24 @@ public class LocationService extends Service implements LocationListener {
            }
         }
         return null;
+    }
+
+    public void removeUpdates(){
+        if (manager!=null) {
+            try {
+                manager.removeUpdates(this);
+            } catch (SecurityException e) {
+                e.printStackTrace();
+            }
+        }
+            manager=null;
+        }
+
+
+    public void unregisterlistener(){
+        if (listener!=null){
+            listener=null;
+        }
     }
 
     @Override
@@ -64,3 +84,5 @@ public class LocationService extends Service implements LocationListener {
         return null;
     }
 }
+
+
