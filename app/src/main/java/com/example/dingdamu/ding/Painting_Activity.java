@@ -86,9 +86,6 @@ public class Painting_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 new LocationTask().execute();
-                service.removeUpdates();
-                service.unregisterlistener();
-
 
             }
         });
@@ -129,8 +126,7 @@ public class Painting_Activity extends AppCompatActivity {
             mRetry.setVisibility(View.VISIBLE);
         }
         Picasso.with(this).load(imageUri.toString()).placeholder(R.drawable.placeholder).resize(1000,1000).into(cameraImage);
-        service.removeUpdates();
-        service.unregisterlistener();
+
     }
 
 
@@ -223,7 +219,6 @@ public class Painting_Activity extends AppCompatActivity {
             }
             pDialog.dismiss();
         }
-
     }
 }
 

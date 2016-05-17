@@ -107,8 +107,7 @@ public class Gallery extends AppCompatActivity {
                     Picasso.with(this).load(sqluri.get(index)).placeholder(R.drawable.placeholder).resize(1000,1000).into(showImage);
                     showIndex.setText("Image Number:"+(index+1));
                     showTime.setText(sqltime.get(index));
-                    service.removeUpdates();
-                    service.unregisterlistener();
+
 
 
 
