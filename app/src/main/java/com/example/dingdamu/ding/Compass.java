@@ -28,7 +28,7 @@ public class Compass implements SensorEventListener {
     private  float presure=0f;
     private  float azimuth_360=0f;
     private float currectAzimuth = 0;
-    public  static  String compass_information;
+    public  static  String compass_information=null;
     public static TextView mText;
 
 
@@ -124,6 +124,7 @@ public class Compass implements SensorEventListener {
                 compass_information="Azimuth:" + String.valueOf(azimuth_360) + "\n" + "Pitch:" + String.valueOf(pitch) +
                         "\n" + "Roll：" + String.valueOf(roll)+"\n"+"Altitude："+String.valueOf(altitude+"m");
                 mText.setText(compass_information);
+                setCompass_information(compass_information);
                 adjustArrow();
             }
         }
@@ -131,5 +132,13 @@ public class Compass implements SensorEventListener {
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
+    }
+
+    public void setCompass_information(String compass_information){
+        this.compass_information=compass_information;
+    }
+
+    public String getCompass_information(){
+        return compass_information;
     }
 }
