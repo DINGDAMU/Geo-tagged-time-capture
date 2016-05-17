@@ -163,7 +163,8 @@ public class Gallery extends AppCompatActivity {
                     index--;
                 }
                 Picasso.with(Gallery.this).load(sqluri.get(index)).placeholder(R.drawable.placeholder).resize(1000,1000).into(showImage);
-                showIndex.setText("Image Number:"+(index+1));
+                String ImageNum="Image Number:"+(index+1);
+                showIndex.setText(ImageNum);
                 showTime.setText(sqltime.get(index));
 
 
@@ -182,7 +183,7 @@ public class Gallery extends AppCompatActivity {
                 getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = cm.getActiveNetworkInfo();
 
-        if (networkInfo != null && networkInfo.isConnected()) {
+        if (networkInfo.isConnected()) {
             return true;
         }
         return false;
