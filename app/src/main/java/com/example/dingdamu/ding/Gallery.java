@@ -103,8 +103,6 @@ public class Gallery extends AppCompatActivity {
 
                 if(sqluri.isEmpty()) {
                     Toast.makeText(Gallery.this,"No matching pictures!",Toast.LENGTH_SHORT).show();
-                    mBack.setVisibility(View.INVISIBLE);
-                    mNext.setVisibility(View.INVISIBLE);
 
 
                 }else{
@@ -183,12 +181,8 @@ public class Gallery extends AppCompatActivity {
         ConnectivityManager cm = (ConnectivityManager)
                 getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = cm.getActiveNetworkInfo();
-        //NetworkInfo internet=cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-        //NetworkInfo wifi=cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
 
-
-
-        if ( networkInfo.isConnected()) {
+        if (networkInfo != null && networkInfo.isConnected()) {
             return true;
         }
         return false;
