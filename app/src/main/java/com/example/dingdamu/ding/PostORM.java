@@ -13,7 +13,7 @@ import java.util.ArrayList;
  */
 public class PostORM {
     private static final String TAG = "PostORM";
-    public static final String TABLE_NAME = "post1";
+    public static final String TABLE_NAME = "post";
     private static final String COLUMN_URI = "uri";
     private static final String COLUMN_COORDINATES = "coordinates";
     private static final String COLUMN_ADDRESS = "address";

@@ -90,6 +90,11 @@ public class Gallery extends AppCompatActivity {
 
             if(addresses.isEmpty()||!isNetworkAvailable()) {
                 Toast.makeText(Gallery.this, "Location not found!", Toast.LENGTH_SHORT).show();
+<<<<<<< HEAD:app/src/main/java/com/example/dingdamu/ding/Gallery.java
+=======
+                mBack.setVisibility(View.INVISIBLE);
+                mNext.setVisibility(View.INVISIBLE);
+>>>>>>> parent of 08267ad... some details modified:app/src/main/java/com/example/dingdamu/ding/Gallery.java
             }
             else{
 
@@ -97,8 +102,13 @@ public class Gallery extends AppCompatActivity {
                         +addresses.get(0).getAddressLine(2);
                 Toast.makeText(Gallery.this,address,Toast.LENGTH_SHORT).show();
                 sqluri=p.getNeededUrifromDB(Gallery.this,address);
+<<<<<<< HEAD:app/src/main/java/com/example/dingdamu/ding/Gallery.java
                 sqlcompass=p.getNeededCompassfromDB(Gallery.this,address);
 
+=======
+
+
+>>>>>>> parent of 08267ad... some details modified:app/src/main/java/com/example/dingdamu/ding/Gallery.java
                 //sqlcoordinate = p.getNeededCoordinatesfromDB(Gallery.this,address);
                 //sqladdress = p.getNeededAddressfromDB(Gallery.this,address);
                 sqltime = p.getNeededTimefromDB(Gallery.this,address);
@@ -106,8 +116,11 @@ public class Gallery extends AppCompatActivity {
 
                 if(sqluri.isEmpty()) {
                     Toast.makeText(Gallery.this,"No matching pictures!",Toast.LENGTH_SHORT).show();
+<<<<<<< HEAD:app/src/main/java/com/example/dingdamu/ding/Gallery.java
                     mBack.setVisibility(View.INVISIBLE);
                     mNext.setVisibility(View.INVISIBLE);
+=======
+>>>>>>> parent of 08267ad... some details modified:app/src/main/java/com/example/dingdamu/ding/Gallery.java
 
 
                 }else{
@@ -169,7 +182,12 @@ public class Gallery extends AppCompatActivity {
                     index--;
                 }
                 Picasso.with(Gallery.this).load(sqluri.get(index)).placeholder(R.drawable.placeholder).resize(1000,1000).into(showImage);
+<<<<<<< HEAD:app/src/main/java/com/example/dingdamu/ding/Gallery.java
                 showIndex.setText("Image Number:"+(index+1));
+=======
+                String ImageNum="Image Number:"+(index+1);
+                showIndex.setText(ImageNum);
+>>>>>>> parent of 08267ad... some details modified:app/src/main/java/com/example/dingdamu/ding/Gallery.java
                 showTime.setText(sqltime.get(index));
                 showCompass.setText(sqlcompass.get(index));
 

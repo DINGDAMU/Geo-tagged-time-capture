@@ -12,6 +12,7 @@
     tools:context="com.example.dingdamu.ding.MainActivity"
     tools:showIn="@layout/app_bar_main">
 
+<<<<<<< HEAD
     <ImageView
         android:id="@+id/main_image_dial"
         android:layout_width="320dp"
@@ -35,5 +36,7 @@
         android:layout_height="match_parent"
         android:id="@+id/compass_information"
         />
+=======
+>>>>>>> parent of 08267ad... some details modified
 
 </RelativeLayout>
