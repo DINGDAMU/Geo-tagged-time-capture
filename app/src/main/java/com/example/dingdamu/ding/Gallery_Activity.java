@@ -1,20 +1,12 @@
 package com.example.dingdamu.ding;
 
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -26,7 +18,6 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +26,7 @@ import java.util.Locale;
 /**
  * Created by dingdamu on 12/05/16.
  */
-public class Gallery extends AppCompatActivity {
+public class Gallery_Activity extends AppCompatActivity {
 
     Button mNext,mBack;
     ArrayList<String> sqluri,sqlcoordinate,sqladdress,sqltime;
@@ -69,7 +60,7 @@ public class Gallery extends AppCompatActivity {
 
 
 
-        service = new LocationService(Gallery.this);
+        service = new LocationService(Gallery_Activity.this);
         Location gpsLocation = service.getLocation(LocationManager.GPS_PROVIDER);
         if (gpsLocation != null) {
             latitude = gpsLocation.getLatitude();
@@ -84,7 +75,7 @@ public class Gallery extends AppCompatActivity {
             }
 
             if(addresses.isEmpty()||!isNetworkAvailable()) {
-                Toast.makeText(Gallery.this, "Location not found!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Gallery_Activity.this, "Location not found!", Toast.LENGTH_SHORT).show();
                 mBack.setVisibility(View.INVISIBLE);
                 mNext.setVisibility(View.INVISIBLE);
             }
@@ -92,17 +83,14 @@ public class Gallery extends AppCompatActivity {
 
                 String address = addresses.get(0).getAddressLine(0)+"\n"+addresses.get(0).getAddressLine(1)+", "
                         +addresses.get(0).getAddressLine(2);
-                Toast.makeText(Gallery.this,address,Toast.LENGTH_SHORT).show();
-                sqluri=p.getNeededUrifromDB(Gallery.this,address);
+                Toast.makeText(Gallery_Activity.this,address,Toast.LENGTH_SHORT).show();
+                sqluri=p.getNeededUrifromDB(Gallery_Activity.this,address);
 
 
-                //sqlcoordinate = p.getNeededCoordinatesfromDB(Gallery.this,address);
-                //sqladdress = p.getNeededAddressfromDB(Gallery.this,address);
-                sqltime = p.getNeededTimefromDB(Gallery.this,address);
-                //Toast.makeText(Gallery.this,"Finish reading the database",Toast.LENGTH_SHORT).show();
+                sqltime = p.getNeededTimefromDB(Gallery_Activity.this,address);
 
                 if(sqluri.isEmpty()) {
-                    Toast.makeText(Gallery.this,"No matching pictures!",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Gallery_Activity.this,"No matching pictures!",Toast.LENGTH_SHORT).show();
 
 
                 }else{
@@ -126,7 +114,7 @@ public class Gallery extends AppCompatActivity {
         }
         else
         {
-            Toast.makeText(Gallery.this,"Could not get location !",Toast.LENGTH_SHORT).show();
+            Toast.makeText(Gallery_Activity.this,"Could not get location !",Toast.LENGTH_SHORT).show();
             mBack.setVisibility(View.INVISIBLE);
             mNext.setVisibility(View.INVISIBLE);
         }
@@ -139,13 +127,13 @@ public class Gallery extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(index == sqluri.size()-1){
-                    Toast.makeText(Gallery.this,"This is the last image, jump to the first",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Gallery_Activity.this,"This is the last image, jump to the first",Toast.LENGTH_SHORT).show();
                     index = 0;
                 }
                 else{
                     index++;
                 }
-                Picasso.with(Gallery.this).load(sqluri.get(index)).placeholder(R.drawable.placeholder).resize(1000,1000).into(showImage);
+                Picasso.with(Gallery_Activity.this).load(sqluri.get(index)).placeholder(R.drawable.placeholder).resize(1000,1000).into(showImage);
                 showIndex.setText("Image Number:"+(index+1));
                 showTime.setText(sqltime.get(index));
 
@@ -156,13 +144,13 @@ public class Gallery extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(index == 0){
-                    Toast.makeText(Gallery.this,"This is the first image,jump to the last image",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Gallery_Activity.this,"This is the first image,jump to the last image",Toast.LENGTH_SHORT).show();
                     index = sqluri.size()-1;
                 }
                 else{
                     index--;
                 }
-                Picasso.with(Gallery.this).load(sqluri.get(index)).placeholder(R.drawable.placeholder).resize(1000,1000).into(showImage);
+                Picasso.with(Gallery_Activity.this).load(sqluri.get(index)).placeholder(R.drawable.placeholder).resize(1000,1000).into(showImage);
                 String ImageNum="Image Number:"+(index+1);
                 showIndex.setText(ImageNum);
                 showTime.setText(sqltime.get(index));

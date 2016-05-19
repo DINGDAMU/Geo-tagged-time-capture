@@ -18,14 +18,12 @@ public class Compass implements SensorEventListener {
     private SensorManager sensorManager;
     private Sensor gsensor;
     private Sensor msensor;
-    private Sensor psensor;
 
     private float[] mGravity = new float[3];
     private float[] mGeomagnetic = new float[3];
     private float azimuth = 0f;
     private  float pitch = 0f;
     private  float roll = 0f;
-    private  float presure=0f;
     private  float azimuth_360=0f;
     private float currectAzimuth = 0;
     public  static  String compass_information;
@@ -40,7 +38,6 @@ public class Compass implements SensorEventListener {
                 .getSystemService(Context.SENSOR_SERVICE);
         gsensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         msensor = sensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
-        psensor = sensorManager.getDefaultSensor(Sensor.TYPE_PRESSURE);
 
     }
 
@@ -49,8 +46,7 @@ public class Compass implements SensorEventListener {
                 SensorManager.SENSOR_DELAY_GAME);
         sensorManager.registerListener(this, msensor,
                 SensorManager.SENSOR_DELAY_GAME);
-        sensorManager.registerListener(this, psensor,
-                SensorManager.SENSOR_DELAY_GAME);
+
     }
 
     public void stop() {
@@ -104,10 +100,6 @@ public class Compass implements SensorEventListener {
                         * event.values[2];
 
             }
-            if(event.sensor.getType()==Sensor.TYPE_PRESSURE){
-                presure = event.values[0];
-
-            }
 
             float R[] = new float[9];
             float I[] = new float[9];
@@ -116,13 +108,12 @@ public class Compass implements SensorEventListener {
             if (success) {
                 float orientation[] = new float[3];
                 SensorManager.getOrientation(R, orientation);
-                float altitude=SensorManager.getAltitude(SensorManager.PRESSURE_STANDARD_ATMOSPHERE,presure);
                 azimuth = (float) Math.toDegrees(orientation[0]);// orientation
                 pitch = (float) Math.toDegrees(orientation[1]);// orientation
                 roll= (float) Math.toDegrees(orientation[2]);// orientation
                 azimuth_360=((-azimuth)+360) % 360;
                 compass_information="Azimuth:" + String.valueOf(azimuth_360) + "\n" + "Pitch:" + String.valueOf(pitch) +
-                        "\n" + "Roll：" + String.valueOf(roll)+"\n"+"Altitude："+String.valueOf(altitude+"m");
+                        "\n" + "Roll：" + String.valueOf(roll);
                 mText.setText(compass_information);
                 adjustArrow();
             }

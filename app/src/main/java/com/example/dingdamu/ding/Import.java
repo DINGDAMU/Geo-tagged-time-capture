@@ -178,7 +178,9 @@ public class Import extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode == RESULT_OK)
-        {
+        {   //Intent.ACTION_MEDIA_SCANNER_SCAN_FILE：扫描指定文件
+
+
             Intent galleryAddIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
             galleryAddIntent.setData(imageUri);
             sendBroadcast(galleryAddIntent);

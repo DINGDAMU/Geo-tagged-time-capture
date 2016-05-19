@@ -19,7 +19,7 @@ import java.util.Locale;
 /**
  * Created by dingdamu on 11/05/16.
  */
-public class GetyourPosition extends AppCompatActivity {
+public class GetyourPosition_Activity extends AppCompatActivity {
     TextView locationText, addressText;
     double latitude, longitude;
     Geocoder geocoder;
@@ -34,7 +34,7 @@ public class GetyourPosition extends AppCompatActivity {
         setContentView(R.layout.act_getyourposition);
         locationText = (TextView)findViewById(R.id.locationText1);
         addressText = (TextView)findViewById(R.id.addressText1);
-        service = new LocationService(GetyourPosition.this);
+        service = new LocationService(GetyourPosition_Activity.this);
         Location gpsLocation = service.getLocation(LocationManager.GPS_PROVIDER);
         if (gpsLocation != null) {
             latitude = gpsLocation.getLatitude();
@@ -49,7 +49,7 @@ public class GetyourPosition extends AppCompatActivity {
             }
 
             if(addresses.isEmpty()||!isNetworkAvailable())
-            {                Toast.makeText(GetyourPosition.this, "Could not get location !", Toast.LENGTH_SHORT).show();
+            {                Toast.makeText(GetyourPosition_Activity.this, "Could not get location !", Toast.LENGTH_SHORT).show();
 
             }
             else {
@@ -64,7 +64,7 @@ public class GetyourPosition extends AppCompatActivity {
         }
         else
         {
-            Toast.makeText(GetyourPosition.this,"Could not get location !",Toast.LENGTH_SHORT).show();
+            Toast.makeText(GetyourPosition_Activity.this,"Could not get location !",Toast.LENGTH_SHORT).show();
         }
     }
 
