@@ -10,8 +10,10 @@ import java.util.Locale;
 
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.PixelFormat;
 import android.hardware.Camera;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.MotionEvent;
@@ -46,8 +48,9 @@ public class Compass_camera_Activity extends Activity {
     private Compass compass;
     Process process = null;
     private SurfaceHolder holder;
-    Button add;
-    SurfaceView surfaceView;
+    int IMAGE_CONST=1;
+    Uri imageUri ;
+
 
 
 
@@ -77,7 +80,7 @@ public class Compass_camera_Activity extends Activity {
         layout = this.findViewById(R.id.buttonLayout);
 
 
-          surfaceView=(SurfaceView) findViewById(R.id.surfaceView);
+        SurfaceView surfaceView=(SurfaceView) findViewById(R.id.surfaceView);
         holder=surfaceView.getHolder();
         holder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
         holder.setFixedSize(176, 144);	//设置Surface分辨率
@@ -94,42 +97,26 @@ public class Compass_camera_Activity extends Activity {
 
 
 
-        add = (Button)findViewById(R.id.takepicture);
+        Button add = (Button)findViewById(R.id.takepicture);
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String appName = Compass_camera_Activity.this.getString(R.string.app_name);
-                File extStorageDir = new File(
-                        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), appName);
+
+                File mFile=getOutputUri(1);
+                imageUri =Uri.fromFile(mFile);
+                if (imageUri == null) {
+                    Toast.makeText(Compass_camera_Activity.this, R.string.storage_access_error, Toast.LENGTH_SHORT).show();
+                } else {
 
 
-                //设置文件名
-                File mFile;
-                Date mCurrentDate = new Date();
-                String mTimestamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ITALY).format(mCurrentDate);
-                String path = extStorageDir.getPath() + File.separator;
-                mFile = new File(path + "FEEDIMG_" + mTimestamp + ".jpg");
+                   takephoto(process,mFile);
+                    Intent galleryAddIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+                    galleryAddIntent.setData(imageUri);
+                    sendBroadcast(galleryAddIntent);
 
-
-
-                try{
-                    OutputStream outputStream = null;
-                    try {
-                        outputStream = process.getOutputStream();
-                        outputStream.write(("screencap -p " + mFile).getBytes("ASCII"));
-                        outputStream.flush();
-                    }catch(Exception e){
-                    } finally {
-                        if (outputStream != null) {
-                            outputStream.close();
-                        }
-                    }
-                    process.waitFor();
-                }catch(Exception e){
-                }finally {
-                    if(process != null){
-                        process.destroy();
-                    }
+                    Intent sendIntent = new Intent(Compass_camera_Activity.this,Painting_Activity.class);
+                    sendIntent.setData(imageUri);
+                    startActivity(sendIntent);
                 }
 
             }
@@ -257,6 +244,74 @@ public class Compass_camera_Activity extends Activity {
         compass.stop();
     }
 
+    //returns Uri as well as creates a directory for storing images locally on the device
+    private File getOutputUri(int mediaType) {
+        if (hasExternalStorage()) {
+            // get external storage directory
+            String appName = Compass_camera_Activity.this.getString(R.string.app_name);
+            //保存图片
+            File extStorageDir = new File(
+                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),appName);
+
+            // create subdirectory
+            if(!extStorageDir.exists())
+            {
+                if(!extStorageDir.mkdirs())
+                {
+                    Toast.makeText(Compass_camera_Activity.this, "Failed to create directory", Toast.LENGTH_SHORT).show();
+                }
+            }
+            //设置文件名
+            File mFile;
+            Date mCurrentDate = new Date();
+            String mTimestamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ITALY).format(mCurrentDate);
+            String path = extStorageDir.getPath() + File.separator;
+            if(mediaType == IMAGE_CONST) {
+                mFile = new File(path + "FEEDIMG_" + mTimestamp + ".jpg");
+            }
+            else
+            {
+                return null;
+            }
+            // return the file's URI
+            // mediaScanIntent.setData(contentUri);
+            // this.sendBroadcast(mediaScanIntent);
+            //添加照片进图册
+            return mFile;
+        } else {
+            return null;
+        }
+    }
+
+    private boolean hasExternalStorage() {
+        String state = Environment.getExternalStorageState();
+        if (state.equals(Environment.MEDIA_MOUNTED)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    private void takephoto(Process process,File mFile){
+        try {
+            OutputStream outputStream = null;
+            try {
+                outputStream = process.getOutputStream();
+                outputStream.write(("screencap -p " + mFile).getBytes("ASCII"));
+                outputStream.flush();
+            } catch (Exception e) {
+            } finally {
+                if (outputStream != null) {
+                    outputStream.close();
+                }
+            }
+            process.waitFor();
+        } catch (Exception e) {
+        } finally {
+            if (process != null) {
+                process.destroy();
+            }
+        }
+    }
 
 
 
