@@ -33,7 +33,7 @@ public class Import extends AppCompatActivity {
     ArrayList<ArrayList<String>> holder;
     ListView feedList;
     PostAdapter adapter;
-    FloatingActionButton add;
+    FloatingActionButton add,add2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +58,16 @@ public class Import extends AppCompatActivity {
                     pictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
                     startActivityForResult(pictureIntent, IMAGE_CONST);
                 }
+            }
+        });
+
+        add2 = (FloatingActionButton)findViewById(R.id.fab2);
+        add2.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(Import.this, Compass_camera_Activity.class);
+                startActivity(intent);
             }
         });
         new SQLTask().execute();
