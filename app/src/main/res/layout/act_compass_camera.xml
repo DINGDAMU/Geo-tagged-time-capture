@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
-            android:background="@mipmap/ic_float_button"
+            android:background="@drawable/btn_selector"
             android:onClick="btnOnclick"
             />
 

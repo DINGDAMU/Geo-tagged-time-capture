@@ -27,7 +27,7 @@
         android:layout_margin="@dimen/activity_horizontal_margin"
         fab:fab_colorNormal="@color/accentColor"
         fab:fab_colorPressed="@color/accentColorPressed"
-        fab:fab_icon="@drawable/ic_add_white_24dp"
+        fab:fab_icon="@drawable/take_photo"
         />
 
 
