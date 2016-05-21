@@ -53,6 +53,8 @@ public class Compass_camera_Activity extends Activity {
     private SurfaceHolder holder;
     int IMAGE_CONST=1;
     Uri imageUri ;
+    private ProgressDialog pDialog;
+
 
 
 
@@ -104,7 +106,7 @@ public class Compass_camera_Activity extends Activity {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new SQLTask().execute();
+                new InsertTask().execute();
 
 
 
@@ -302,8 +304,7 @@ public class Compass_camera_Activity extends Activity {
         }
     }
     //populates the list asynchronously
-    public class SQLTask extends AsyncTask<String,String,String> {
-        private ProgressDialog pDialog;
+    public class InsertTask extends AsyncTask<String,String,String> {
 
         @Override
         protected void onPreExecute() {
@@ -344,7 +345,6 @@ public class Compass_camera_Activity extends Activity {
         // notifyDataSetChanged方法通过一个外部的方法控制如果适配器的内容改变时需要强制调用getView来刷新每个Item的内容。
         @Override
         protected void onPostExecute(String result) {
-            pDialog.dismiss();
 
             if (result.equalsIgnoreCase("true")) {
                 String success="success!";
@@ -361,10 +361,13 @@ public class Compass_camera_Activity extends Activity {
                 Toast.makeText(Compass_camera_Activity.this,alarm , Toast.LENGTH_SHORT).show();
 
             }
+            pDialog.dismiss();
+
         }
 
 
     }
+
 
 
 

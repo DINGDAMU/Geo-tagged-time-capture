@@ -107,7 +107,7 @@ public class PostORM {
         myDataBase = databaseWrapper.getWritableDatabase();
         ArrayList<String> uri_now = new ArrayList<String>();
 
-        Cursor cur = myDataBase.rawQuery("SELECT * from post where address = ?",new String[] {address});
+        Cursor cur = myDataBase.rawQuery("SELECT * from post where address = ? ORDER BY time",new String[] {address});
         for(cur.moveToFirst();!cur.isAfterLast();cur.moveToNext())
         {
             uri_now.add(cur.getString(0));
@@ -122,7 +122,7 @@ public class PostORM {
         myDataBase = databaseWrapper.getWritableDatabase();
         ArrayList<String> coordinates_now = new ArrayList<String>();
 
-        Cursor cur = myDataBase.rawQuery("SELECT * from post where address =?",new String[] {address});
+        Cursor cur = myDataBase.rawQuery("SELECT * from post where address =? ORDER BY time",new String[] {address});
         for(cur.moveToFirst();!cur.isAfterLast();cur.moveToNext())
         {
             coordinates_now.add(cur.getString(1));
@@ -136,7 +136,7 @@ public class PostORM {
         myDataBase = databaseWrapper.getWritableDatabase();
         ArrayList<String> addresses_now = new ArrayList<String>();
 
-        Cursor cur = myDataBase.rawQuery("SELECT * from post where address =?",new String[] {address});
+        Cursor cur = myDataBase.rawQuery("SELECT * from post where address =? ORDER BY time",new String[] {address});
         for(cur.moveToFirst();!cur.isAfterLast();cur.moveToNext())
         {
             addresses_now.add(cur.getString(2));
@@ -151,7 +151,7 @@ public class PostORM {
         myDataBase = databaseWrapper.getWritableDatabase();
         ArrayList<String> time_now = new ArrayList<String>();
 
-        Cursor cur = myDataBase.rawQuery("SELECT * from post where address =?",new String[] {address});
+        Cursor cur = myDataBase.rawQuery("SELECT * from post where address =? ORDER BY time",new String[] {address});
         for(cur.moveToFirst();!cur.isAfterLast();cur.moveToNext())
         {
             time_now.add(cur.getString(3));

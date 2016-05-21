@@ -34,14 +34,6 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    private View layout;
-    private Camera camera;
-    private Camera.Parameters parameters;
-    private Compass compass;
-    Process process = null;
-    private SurfaceHolder holder;
-    Button add;
-    SurfaceView surfaceView;
 
 
     @Override

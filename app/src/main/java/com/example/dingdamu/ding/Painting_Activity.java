@@ -43,6 +43,8 @@ public class Painting_Activity extends AppCompatActivity {
     Button mSave,mCancel,mRetry;
     PostORM p = new PostORM();
     LocationService service;
+    private ProgressDialog pDialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,9 +87,8 @@ public class Painting_Activity extends AppCompatActivity {
         mRetry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new LocationTask().execute();
-                service.removeUpdates();
-                service.unregisterlistener();
+                Position pos=new Position();
+                pos.getPosition(locationText,addressText,Painting_Activity.this);
 
             }
         });
@@ -162,68 +163,7 @@ public class Painting_Activity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public class LocationTask extends AsyncTask<String,String,String> {
 
-        private ProgressDialog pDialog;
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            pDialog = new ProgressDialog(Painting_Activity.this);
-            pDialog.setMessage("Getting your location ...");
-            pDialog.setIndeterminate(false);
-            pDialog.setCancelable(true);
-            pDialog.show();
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-            Location gpsLocation = service.getLocation(LocationManager.GPS_PROVIDER);
-            if (gpsLocation != null) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        mRetry.setVisibility(View.GONE);
-                        mSave.setVisibility(View.VISIBLE);
-//stuff that updates ui
-                    }
-                });
-
-                latitude = gpsLocation.getLatitude();
-                longitude = gpsLocation.getLongitude();
-                resultLatLong = "Latitude: " + gpsLocation.getLatitude() +
-                        " Longitude: " + gpsLocation.getLongitude();
-                geocoder = new Geocoder(Painting_Activity.this, Locale.getDefault());
-
-                try {
-                    addresses = geocoder.getFromLocation(latitude, longitude, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            if(!isNetworkAvailable()||addresses.isEmpty())
-            {
-                Toast.makeText(Painting_Activity.this,"Could not get location !",Toast.LENGTH_SHORT).show();
-                mSave.setVisibility(View.GONE);
-                mRetry.setVisibility(View.VISIBLE);
-
-            }
-            else {
-                String address = addresses.get(0).getAddressLine(0);
-                String city = addresses.get(0).getAddressLine(1);
-                String state = addresses.get(0).getAddressLine(2);
-                resultAddr = address + "\n" + city + ", " + state;
-                locationText.setText(resultLatLong);
-                addressText.setText(resultAddr);
-            }
-            pDialog.dismiss();
-        }
-    }
 }
 
 

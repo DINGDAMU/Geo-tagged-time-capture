@@ -21,11 +21,7 @@ import java.util.Locale;
  */
 public class GetyourPosition_Activity extends AppCompatActivity {
     TextView locationText, addressText;
-    double latitude, longitude;
-    Geocoder geocoder;
-    List<Address> addresses;
-    String resultLatLong, resultAddr;
-    LocationService service;
+
 
 
 
@@ -34,52 +30,12 @@ public class GetyourPosition_Activity extends AppCompatActivity {
         setContentView(R.layout.act_getyourposition);
         locationText = (TextView)findViewById(R.id.locationText1);
         addressText = (TextView)findViewById(R.id.addressText1);
-        service = new LocationService(GetyourPosition_Activity.this);
-        Location gpsLocation = service.getLocation(LocationManager.GPS_PROVIDER);
-        if (gpsLocation != null) {
-            latitude = gpsLocation.getLatitude();
-            longitude = gpsLocation.getLongitude();
-            resultLatLong = "Latitude: " + gpsLocation.getLatitude()+" \nLongitude: " + gpsLocation.getLongitude();
-            geocoder = new Geocoder(this, Locale.getDefault());
+        Position pos=new Position();
+        pos.getPosition(locationText,addressText,GetyourPosition_Activity.this);
 
-            try {
-                addresses = geocoder.getFromLocation(latitude, longitude, 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
 
-            if(addresses.isEmpty()||!isNetworkAvailable())
-            {                Toast.makeText(GetyourPosition_Activity.this, "Could not get location !", Toast.LENGTH_SHORT).show();
 
-            }
-            else {
 
-                String address = addresses.get(0).getAddressLine(0);
-                String city = addresses.get(0).getAddressLine(1);
-                String state = addresses.get(0).getAddressLine(2);
-                resultAddr = address + "\n" + city + ", " + state;
-                locationText.setText(resultLatLong);
-                addressText.setText(resultAddr);
-            }
-        }
-        else
-        {
-            Toast.makeText(GetyourPosition_Activity.this,"Could not get location !",Toast.LENGTH_SHORT).show();
-        }
-        service.removeUpdates();
-        service.unregisterlistener();
     }
-
-    public boolean isNetworkAvailable() {
-        ConnectivityManager cm = (ConnectivityManager)
-                getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = cm.getActiveNetworkInfo();
-
-        if (networkInfo != null && networkInfo.isConnected()) {
-            return true;
-        }
-        return false;
-    }
-
 
 }
