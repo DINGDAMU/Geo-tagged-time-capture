@@ -5,15 +5,18 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.PixelFormat;
 import android.hardware.Camera;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.MotionEvent;
@@ -101,23 +104,9 @@ public class Compass_camera_Activity extends Activity {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                File mFile=getOutputUri(1);
-                imageUri =Uri.fromFile(mFile);
-                if (imageUri == null) {
-                    Toast.makeText(Compass_camera_Activity.this, R.string.storage_access_error, Toast.LENGTH_SHORT).show();
-                } else {
+                new SQLTask().execute();
 
 
-                   takephoto(process,mFile);
-                    Intent galleryAddIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-                    galleryAddIntent.setData(imageUri);
-                    sendBroadcast(galleryAddIntent);
-
-                    Intent sendIntent = new Intent(Compass_camera_Activity.this,Painting_Activity.class);
-                    sendIntent.setData(imageUri);
-                    startActivity(sendIntent);
-                }
 
             }
         });
@@ -312,10 +301,70 @@ public class Compass_camera_Activity extends Activity {
             }
         }
     }
+    //populates the list asynchronously
+    public class SQLTask extends AsyncTask<String,String,String> {
+        private ProgressDialog pDialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            pDialog = new ProgressDialog(Compass_camera_Activity.this);
+            pDialog.setMessage("Loading.....");
+            pDialog.setIndeterminate(false);
+            pDialog.setCancelable(true);
+            pDialog.show();
+        }
 
 
+        @Override
+        protected String doInBackground(String... params) {
+            File mFile = getOutputUri(IMAGE_CONST);
+            imageUri = Uri.fromFile(mFile);
+            String result;
+            if (imageUri == null) {
+                Toast.makeText(Compass_camera_Activity.this, R.string.storage_access_error, Toast.LENGTH_SHORT).show();
+                result = "false";
+            } else {
 
 
+                takephoto(process, mFile);
+                Intent galleryAddIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+                galleryAddIntent.setData(imageUri);
+                sendBroadcast(galleryAddIntent);
+                result = "true";
+
+
+            }
+
+            return result;
+        }
+
+        //首先我们可能重写getView()，通过LayoutInflater的inflate方法映射一个自己定义的Layout布局xml加载或从xxxView中创建。
+        //这些大家可能滚瓜烂熟了但是仍然很多Android开发者对于BaseAdapter中notifyDataSetChanged()方法不是很理解
+        // notifyDataSetChanged方法通过一个外部的方法控制如果适配器的内容改变时需要强制调用getView来刷新每个Item的内容。
+        @Override
+        protected void onPostExecute(String result) {
+            pDialog.dismiss();
+
+            if (result.equalsIgnoreCase("true")) {
+                String success="success!";
+                Toast.makeText(Compass_camera_Activity.this,success, Toast.LENGTH_SHORT).show();
+
+                Intent sendIntent = new Intent(Compass_camera_Activity.this, Painting_Activity.class);
+                sendIntent.setData(imageUri);
+                startActivity(sendIntent);
+
+
+            }
+            else{
+                String alarm="failed to take the photo";
+                Toast.makeText(Compass_camera_Activity.this,alarm , Toast.LENGTH_SHORT).show();
+
+            }
+        }
+
+
+    }
 
 
 
