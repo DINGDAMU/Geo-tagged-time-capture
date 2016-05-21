@@ -154,6 +154,8 @@ public class Gallery_Activity extends AppCompatActivity {
                 String ImageNum="Image Number:"+(index+1);
                 showIndex.setText(ImageNum);
                 showTime.setText(sqltime.get(index));
+                service.removeUpdates();
+                service.unregisterlistener();
 
 
             }
