@@ -100,6 +100,8 @@ public class Gallery_Activity extends AppCompatActivity {
                     showTime.setText(sqltime.get(index));
                     mBack.setVisibility(View.VISIBLE);
                     mNext.setVisibility(View.VISIBLE);
+                    service.removeUpdates();
+                    service.unregisterlistener();
 
 
 

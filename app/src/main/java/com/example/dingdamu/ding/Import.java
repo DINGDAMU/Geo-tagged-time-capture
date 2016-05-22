@@ -198,6 +198,7 @@ public class Import extends AppCompatActivity {
             Intent sendIntent = new Intent(Import.this,Painting_Activity.class);
             sendIntent.setData(imageUri);
             startActivity(sendIntent);
+            Import.this.finish();
         }
         else if(resultCode != RESULT_CANCELED)
         {

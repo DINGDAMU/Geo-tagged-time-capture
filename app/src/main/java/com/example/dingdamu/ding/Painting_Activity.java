@@ -72,6 +72,8 @@ public class Painting_Activity extends AppCompatActivity {
                 Toast.makeText(Painting_Activity.this, "Created new Post", Toast.LENGTH_SHORT).show();
                 Intent i = new Intent(Painting_Activity.this, Import.class);
                 startActivity(i);
+                Painting_Activity.this.finish();
+
             }
         });
 
@@ -79,7 +81,7 @@ public class Painting_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(Painting_Activity.this,"Post Discarded",Toast.LENGTH_SHORT).show();
-                Intent i = new Intent(Painting_Activity.this,MainActivity.class);
+                Intent i = new Intent(Painting_Activity.this,Import.class);
                 startActivity(i);
             }
         });
@@ -89,6 +91,8 @@ public class Painting_Activity extends AppCompatActivity {
             public void onClick(View v) {
                 Position pos=new Position();
                 pos.getPosition(locationText,addressText,Painting_Activity.this);
+
+
 
             }
         });

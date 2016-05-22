@@ -1,5 +1,6 @@
 package com.example.dingdamu.ding;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
@@ -32,7 +33,6 @@ public class GetyourPosition_Activity extends AppCompatActivity {
         addressText = (TextView)findViewById(R.id.addressText1);
         Position pos=new Position();
         pos.getPosition(locationText,addressText,GetyourPosition_Activity.this);
-
 
 
 
