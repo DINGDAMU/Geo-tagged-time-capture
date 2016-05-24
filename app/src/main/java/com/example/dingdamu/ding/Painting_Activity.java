@@ -121,7 +121,7 @@ public class Painting_Activity extends AppCompatActivity {
                 String address = addresses.get(0).getAddressLine(0);
                 String city = addresses.get(0).getAddressLine(1);
                 String state = addresses.get(0).getAddressLine(2);
-                resultAddr = address + "\n" + city + ", " + state;
+                resultAddr = address + "," + city + ", " + state;
                 locationText.setText(resultLatLong);
                 addressText.setText(resultAddr);
             }

@@ -56,6 +56,8 @@ public class Gallery_Activity extends AppCompatActivity {
         showImage= (ImageView) findViewById(R.id.listImage);
         showTime=(TextView)findViewById(R.id.listTime);
         showIndex=(TextView)findViewById(R.id.index);
+        mBack.setVisibility(View.INVISIBLE);
+        mNext.setVisibility(View.INVISIBLE);
 
 
 
@@ -81,7 +83,7 @@ public class Gallery_Activity extends AppCompatActivity {
             }
             else{
 
-                String address = addresses.get(0).getAddressLine(0)+"\n"+addresses.get(0).getAddressLine(1)+", "
+                String address = addresses.get(0).getAddressLine(0)+","+addresses.get(0).getAddressLine(1)+", "
                         +addresses.get(0).getAddressLine(2);
                 Toast.makeText(Gallery_Activity.this,address,Toast.LENGTH_SHORT).show();
                 sqluri=p.getNeededUrifromDB(Gallery_Activity.this,address);

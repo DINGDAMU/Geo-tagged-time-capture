@@ -34,6 +34,8 @@ public class Import extends AppCompatActivity {
     ListView feedList;
     PostAdapter adapter;
     FloatingActionButton add,add2;
+    Output op=new Output();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +53,8 @@ public class Import extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent pictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                imageUri = getOutputUri(IMAGE_CONST);
+                File mFile=op.getOutputUri(IMAGE_CONST,Import.this);
+                imageUri = Uri.fromFile(mFile);
                 if (imageUri == null) {
                     Toast.makeText(Import.this, R.string.storage_access_error, Toast.LENGTH_SHORT).show();
                 } else {
@@ -136,53 +139,7 @@ public class Import extends AppCompatActivity {
         }
     }
 
-    //returns Uri as well as creates a directory for storing images locally on the device
-    private Uri getOutputUri(int mediaType) {
-        if (hasExternalStorage()) {
-            // get external storage directory
-            String appName = Import.this.getString(R.string.app_name);
-            //保存图片
-            File extStorageDir = new File(
-                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),appName);
 
-            // create subdirectory
-            if(!extStorageDir.exists())
-            {
-                if(!extStorageDir.mkdirs())
-                {
-                    Toast.makeText(Import.this, "Failed to create directory", Toast.LENGTH_SHORT).show();
-                }
-            }
-            //设置文件名
-            File mFile;
-            Date mCurrentDate = new Date();
-            String mTimestamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ITALY).format(mCurrentDate);
-            String path = extStorageDir.getPath() + File.separator;
-            if(mediaType == IMAGE_CONST) {
-                mFile = new File(path + "FEEDIMG_" + mTimestamp + ".jpg");
-            }
-            else
-            {
-                return null;
-            }
-            // return the file's URI
-           // mediaScanIntent.setData(contentUri);
-           // this.sendBroadcast(mediaScanIntent);
-            //添加照片进图册
-            return Uri.fromFile(mFile);
-        } else {
-            return null;
-        }
-    }
-
-    private boolean hasExternalStorage() {
-        String state = Environment.getExternalStorageState();
-        if (state.equals(Environment.MEDIA_MOUNTED)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

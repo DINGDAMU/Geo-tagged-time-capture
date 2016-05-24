@@ -350,7 +350,7 @@ public class Compass_camera_Activity extends Activity {
                 String success="success!";
                 Toast.makeText(Compass_camera_Activity.this,success, Toast.LENGTH_SHORT).show();
 
-                Intent sendIntent = new Intent(Compass_camera_Activity.this, Painting_Activity.class);
+                Intent sendIntent = new Intent(Compass_camera_Activity.this, Network_painting_Activity.class);
                 sendIntent.setData(imageUri);
                 startActivity(sendIntent);
 

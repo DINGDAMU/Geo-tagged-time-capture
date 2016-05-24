@@ -12,8 +12,64 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="LOGIN"
+        android:text="FILTER"
         android:id="@+id/button"
         android:layout_marginTop="10dp"
-        android:onClick="checkLogin"/>
+        android:onClick="filter"/>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/listImage"
+        android:layout_below="@+id/button"
+
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Index here"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/index"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/listImage"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Time here"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/listTime"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/index"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Uploader here"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/listUploader"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/listTime"
+        />
+
+
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Back"
+        android:id="@+id/pre_pic"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Next"
+        android:id="@+id/next_pic"
+        android:layout_alignTop="@+id/pre_pic"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
 </RelativeLayout>

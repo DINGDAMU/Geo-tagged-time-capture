@@ -12,6 +12,10 @@
     <string name="title_activity_compass">Compass</string>
     <string name="title_activity_compass_camera">compass_camera</string>
     <string name="title_activity_filter">Filter</string>
+    <string name="title_activity_uplaod">Uploadr</string>
+    <string name="title_activity_Netwrok">Ntework_Drawing</string>
+
+
 
 
     <string name="action_settings">Settings</string>

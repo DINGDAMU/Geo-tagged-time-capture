@@ -126,9 +126,12 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_share) {
 
             Intent intent = new Intent();
-            intent.setClass(MainActivity.this, Filter_Activity.class);
+            intent.setClass(MainActivity.this, Upload_Activity.class);
             startActivity(intent);
         } else if (id == R.id.nav_send) {
+            Intent intent = new Intent();
+            intent.setClass(MainActivity.this, Filter_Activity.class);
+            startActivity(intent);
 
         }
 
