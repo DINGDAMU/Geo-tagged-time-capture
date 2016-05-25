@@ -12,8 +12,10 @@
     <string name="title_activity_compass">Compass</string>
     <string name="title_activity_compass_camera">compass_camera</string>
     <string name="title_activity_filter">Filter</string>
-    <string name="title_activity_uplaod">Uploadr</string>
-    <string name="title_activity_Netwrok">Ntework_Drawing</string>
+    <string name="title_activity_upload">Uploadr</string>
+    <string name="title_activity_Network">Network_Drawing</string>
+    <string name="title_activity_Network_compass">Compass_camera</string>
+
 
 
 
@@ -22,7 +24,6 @@
     <string name="action_help">Help</string>
     <string name="author">Ding Damu</string>
     <string name="email">damu.ding@studenti.unitn.it</string>
-    <string name="content">丁大牧帅的一比</string>
     <string name="goback">return to the homepage</string>
     <string name="compass_dial">Compass Dial</string>
     <string name="compass_hands">Compass Hands</string>

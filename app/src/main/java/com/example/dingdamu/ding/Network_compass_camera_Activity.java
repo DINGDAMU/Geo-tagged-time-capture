@@ -1,15 +1,5 @@
 package com.example.dingdamu.ding;
 
-
-import java.io.File;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Locale;
-
-
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -22,29 +12,26 @@ import android.os.Environment;
 import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.SurfaceHolder;
-import android.view.SurfaceHolder.Callback;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.Window;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 /**
- * Android手指拍照
- *
- * @author wwj
- * @date 2013/4/29
+ * Created by dingdamu on 24/05/16.
  */
-public class Compass_camera_Activity extends Activity {
+public class Network_compass_camera_Activity extends Activity{
     private View layout;
     private Camera camera;
     private Camera.Parameters parameters;
@@ -131,7 +118,7 @@ public class Compass_camera_Activity extends Activity {
 
 
 
-    private final class SurfaceCallback implements Callback {
+    private final class SurfaceCallback implements SurfaceHolder.Callback {
 
         //拍照状态变化时调用该方法
         @Override
@@ -151,7 +138,7 @@ public class Compass_camera_Activity extends Activity {
             try {
                 camera = Camera.open(); // 打开摄像头
                 camera.setPreviewDisplay(holder); // 设置用于显示拍照影像的SurfaceHolder对象
-                camera.setDisplayOrientation(getPreviewDegree(Compass_camera_Activity.this));
+                camera.setDisplayOrientation(getPreviewDegree(Network_compass_camera_Activity.this));
                 camera.startPreview(); // 开始预览
             } catch (Exception e) {
                 e.printStackTrace();
@@ -173,7 +160,7 @@ public class Compass_camera_Activity extends Activity {
     /**
      * 点击手机屏幕是，显示两个按钮
      */
-   public boolean onTouchEvent(MotionEvent event) {
+    public boolean onTouchEvent(MotionEvent event) {
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
                 layout.setVisibility(ViewGroup.VISIBLE); // 设置视图可见
@@ -240,7 +227,7 @@ public class Compass_camera_Activity extends Activity {
     private File getOutputUri(int mediaType) {
         if (hasExternalStorage()) {
             // get external storage directory
-            String appName = Compass_camera_Activity.this.getString(R.string.app_name);
+            String appName = Network_compass_camera_Activity.this.getString(R.string.app_name);
             //保存图片
             File extStorageDir = new File(
                     Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),appName);
@@ -250,7 +237,7 @@ public class Compass_camera_Activity extends Activity {
             {
                 if(!extStorageDir.mkdirs())
                 {
-                    Toast.makeText(Compass_camera_Activity.this, "Failed to create directory", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Network_compass_camera_Activity.this, "Failed to create directory", Toast.LENGTH_SHORT).show();
                 }
             }
             //设置文件名
@@ -310,7 +297,7 @@ public class Compass_camera_Activity extends Activity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            pDialog = new ProgressDialog(Compass_camera_Activity.this);
+            pDialog = new ProgressDialog(Network_compass_camera_Activity.this);
             pDialog.setMessage("Loading.....");
             pDialog.setIndeterminate(false);
             pDialog.setCancelable(true);
@@ -320,11 +307,11 @@ public class Compass_camera_Activity extends Activity {
 
         @Override
         protected String doInBackground(String... params) {
-            File mFile=op.getOutputUri(IMAGE_CONST,Compass_camera_Activity.this);
+            File mFile=op.getOutputUri(IMAGE_CONST,Network_compass_camera_Activity.this);
             imageUri = Uri.fromFile(mFile);
             String result;
             if (imageUri == null) {
-                Toast.makeText(Compass_camera_Activity.this, R.string.storage_access_error, Toast.LENGTH_SHORT).show();
+                Toast.makeText(Network_compass_camera_Activity.this, R.string.storage_access_error, Toast.LENGTH_SHORT).show();
                 result = "false";
             } else {
 
@@ -349,19 +336,20 @@ public class Compass_camera_Activity extends Activity {
 
             if (result.equalsIgnoreCase("true")) {
                 String success="success!";
-                Toast.makeText(Compass_camera_Activity.this,success, Toast.LENGTH_SHORT).show();
+                Toast.makeText(Network_compass_camera_Activity.this,success, Toast.LENGTH_SHORT).show();
 
-                Intent sendIntent = new Intent(Compass_camera_Activity.this, Painting_Activity.class);
+                Intent sendIntent = new Intent(Network_compass_camera_Activity.this, Network_painting_Activity.class);
                 sendIntent.setData(imageUri);
                 startActivity(sendIntent);
-                Compass_camera_Activity.this.finish();
+                Network_compass_camera_Activity.this.finish();
+
 
 
 
             }
             else{
                 String alarm="failed to take the photo";
-                Toast.makeText(Compass_camera_Activity.this,alarm , Toast.LENGTH_SHORT).show();
+                Toast.makeText(Network_compass_camera_Activity.this,alarm , Toast.LENGTH_SHORT).show();
 
             }
             pDialog.dismiss();
@@ -371,8 +359,4 @@ public class Compass_camera_Activity extends Activity {
 
     }
 
-
-
-
 }
-

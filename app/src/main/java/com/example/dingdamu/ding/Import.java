@@ -71,6 +71,7 @@ public class Import extends AppCompatActivity {
                 Intent intent = new Intent();
                 intent.setClass(Import.this, Compass_camera_Activity.class);
                 startActivity(intent);
+                Import.this.finish();
             }
         });
         new SQLTask().execute();

@@ -21,7 +21,6 @@ public class Compass_Activity extends AppCompatActivity {
 
 
 
-
     }
 
     @Override

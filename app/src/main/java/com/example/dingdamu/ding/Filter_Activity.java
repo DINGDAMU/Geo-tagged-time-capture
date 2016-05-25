@@ -54,6 +54,7 @@ public class Filter_Activity extends Activity {
     TextView time_text;
     TextView name_text;
     TextView index_text;
+    TextView coordinates_text;
     int index=0;
     Button mNext,mBack;
     JSONArray jsonArray;
@@ -67,6 +68,7 @@ public class Filter_Activity extends Activity {
         time_text = (TextView) findViewById(R.id.listTime);
         name_text = (TextView) findViewById(R.id.listUploader);
         index_text = (TextView) findViewById(R.id.index);
+        coordinates_text=(TextView)findViewById(R.id.listCoordinates);
         mNext = (Button)findViewById(R.id.next_pic);
         mBack = (Button)findViewById(R.id.pre_pic);
 
@@ -92,6 +94,7 @@ public class Filter_Activity extends Activity {
                     String name = jp.getString("username");
                 String time = jp.getString("time");
                 String coordinates = jp.getString("coordinates");
+                    coordinates_text.setText(coordinates);
                 time_text.setText(time);
                 String uploader = "Uploaded by:" + name;
                 name_text.setText(uploader);
@@ -121,6 +124,7 @@ public class Filter_Activity extends Activity {
                     String name = jp.getString("username");
                     String time = jp.getString("time");
                     String coordinates = jp.getString("coordinates");
+                    coordinates_text.setText(coordinates);
                     time_text.setText(time);
                     String uploader = "Uploaded by:" + name;
                     name_text.setText(uploader);
@@ -287,6 +291,7 @@ public class Filter_Activity extends Activity {
                     String name = jp.getString("username");
                     String time = jp.getString("time");
                     String coordinates = jp.getString("coordinates");
+                    coordinates_text.setText(coordinates);
                     time_text.setText(time);
                     String uploader = "Uploaded by:" + name;
                     name_text.setText(uploader);
@@ -294,6 +299,7 @@ public class Filter_Activity extends Activity {
                     index_text.setText(index_new);
                     mBack.setVisibility(View.VISIBLE);
                     mNext.setVisibility(View.VISIBLE);
+                    Filter_Activity.this.finish();
                 }
 
 

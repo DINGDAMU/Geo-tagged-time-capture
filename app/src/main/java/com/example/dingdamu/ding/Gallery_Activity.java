@@ -119,9 +119,12 @@ public class Gallery_Activity extends AppCompatActivity {
         else
         {
             Toast.makeText(Gallery_Activity.this,"Could not get location !",Toast.LENGTH_SHORT).show();
+            service.removeUpdates();
+            service.unregisterlistener();
             mBack.setVisibility(View.INVISIBLE);
             mNext.setVisibility(View.INVISIBLE);
         }
+        Gallery_Activity.this.finish();
 
 
 
@@ -158,8 +161,7 @@ public class Gallery_Activity extends AppCompatActivity {
                 String ImageNum="Image Number:"+(index+1);
                 showIndex.setText(ImageNum);
                 showTime.setText(sqltime.get(index));
-                service.removeUpdates();
-                service.unregisterlistener();
+
 
 
             }

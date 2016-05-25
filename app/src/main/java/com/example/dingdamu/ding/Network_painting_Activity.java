@@ -13,6 +13,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Looper;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.text.format.Time;
@@ -57,13 +58,6 @@ public class Network_painting_Activity extends AppCompatActivity {
     double latitude, longitude;
     String resultLatLong, resultAddr;
     Button mUpload, mCancel, mRetry;
-    PostORM p = new PostORM();
-    LocationService service;
-    Output op = new Output();
-    int IMAGE_CONST = 1;
-    File mFile;
-    int  serverResponseCode;
-
 
     public static final int CONNECTION_TIMEOUT=10000;
     public static final int READ_TIMEOUT=15000;
@@ -72,7 +66,7 @@ public class Network_painting_Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_network_painting);
-        service = new LocationService(Network_painting_Activity.this);
+        LocationService service = new LocationService(Network_painting_Activity.this);
         cameraImage = (ImageView) findViewById(R.id.image);
         locationText = (TextView) findViewById(R.id.locationText);
         addressText = (TextView) findViewById(R.id.addressText);
@@ -104,17 +98,21 @@ public class Network_painting_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(Network_painting_Activity.this, "Upload Discarded", Toast.LENGTH_SHORT).show();
-                Intent i = new Intent(Network_painting_Activity.this, Import.class);
+                Intent i = new Intent(Network_painting_Activity.this, Upload_Activity.class);
                 startActivity(i);
+                Network_painting_Activity.this.finish();
+
             }
         });
 
         mRetry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Position pos = new Position();
-                pos.getPosition(locationText, addressText, Network_painting_Activity.this);
-
+                if(Utils.isFastDoubleClick()){
+                    return;
+                }else {
+                    new LocationTask().execute();
+                }
 
             }
         });
@@ -287,6 +285,82 @@ public class Network_painting_Activity extends AppCompatActivity {
             }
         }
 
+    }
+    public class LocationTask extends AsyncTask<String,String,List<Address> > {
+
+        private ProgressDialog pDialog;
+        LocationService service;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            if(pDialog!=null){
+                pDialog=null;
+            }
+            pDialog = new ProgressDialog(Network_painting_Activity.this);
+            pDialog.setMessage("Getting your location ...");
+            pDialog.setIndeterminate(false);
+            pDialog.setCancelable(true);
+            pDialog.show();
+        }
+
+        @Override
+        protected List<Address>  doInBackground(String... params) {
+            Looper.prepare();
+             service=new LocationService(Network_painting_Activity.this);
+            service = new LocationService(Network_painting_Activity.this);
+            Location gpsLocation = service.getLocation(LocationManager.GPS_PROVIDER);
+            if (gpsLocation != null) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mRetry.setVisibility(View.GONE);
+                        mUpload.setVisibility(View.VISIBLE);
+//stuff that updates ui
+                    }
+                });
+
+                latitude = gpsLocation.getLatitude();
+                longitude = gpsLocation.getLongitude();
+                resultLatLong = "Latitude: " + gpsLocation.getLatitude() +
+                        " Longitude: " + gpsLocation.getLongitude();
+                geocoder = new Geocoder(Network_painting_Activity.this, Locale.getDefault());
+
+                try {
+                    addresses = geocoder.getFromLocation(latitude, longitude, 1);
+                    return addresses; // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            Looper.myLooper().quit();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(List<Address> addresses) {
+            pDialog.dismiss();
+            super.onPostExecute(addresses);
+            if(!isNetworkAvailable()||addresses==null)
+            {
+                Toast.makeText(Network_painting_Activity.this,"Could not get location !Please retry in "+Utils.clicktime/1000+" seconds!",Toast.LENGTH_SHORT).show();
+                mUpload.setVisibility(View.GONE);
+                mRetry.setVisibility(View.VISIBLE);
+                service.removeUpdates();
+                service.unregisterlistener();
+
+            }
+            else {
+                String address = addresses.get(0).getAddressLine(0);
+                String city = addresses.get(0).getLocality();
+                String state = addresses.get(0).getAdminArea();
+                resultAddr = address + "\n" + city + ", " + state;
+                locationText.setText(resultLatLong);
+                addressText.setText(resultAddr);
+                service.removeUpdates();
+                service.unregisterlistener();
+            }
+        }
     }
 
 }

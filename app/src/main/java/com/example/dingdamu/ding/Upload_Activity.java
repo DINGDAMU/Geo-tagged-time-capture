@@ -1,5 +1,6 @@
 package com.example.dingdamu.ding;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -64,8 +65,10 @@ public class Upload_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
-                intent.setClass(Upload_Activity.this, Compass_camera_Activity.class);
+                intent.setClass(Upload_Activity.this,Network_compass_camera_Activity.class);
                 startActivity(intent);
+                Upload_Activity.this.finish();
+
             }
         });
 
