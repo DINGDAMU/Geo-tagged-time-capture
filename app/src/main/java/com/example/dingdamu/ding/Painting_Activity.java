@@ -150,16 +150,7 @@ public class Painting_Activity extends AppCompatActivity {
         return true;
     }
 
-    public boolean isNetworkAvailable() {
-        ConnectivityManager cm = (ConnectivityManager)
-                getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = cm.getActiveNetworkInfo();
 
-        if ( networkInfo.isConnected()) {
-            return true;
-        }
-        return false;
-    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -237,7 +228,7 @@ public class Painting_Activity extends AppCompatActivity {
 
 
 
-            if (!isNetworkAvailable(Painting_Activity.this) || addresses==null) {
+            if (!isNetworkAvailable() || addresses==null) {
                 Toast.makeText(Painting_Activity.this,"Could not get location !Please retry in "+Utils.clicktime/1000+" seconds!", Toast.LENGTH_SHORT).show();
                 service.removeUpdates();
                 service.unregisterlistener();
@@ -258,8 +249,8 @@ public class Painting_Activity extends AppCompatActivity {
 
         }
     }
-    public boolean isNetworkAvailable(Context context) {
-        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+    public boolean isNetworkAvailable() {
+        ConnectivityManager cm = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = cm.getActiveNetworkInfo();
 
         if (networkInfo.isConnected()) {

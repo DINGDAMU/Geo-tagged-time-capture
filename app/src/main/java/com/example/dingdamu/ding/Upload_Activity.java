@@ -32,6 +32,7 @@ public class Upload_Activity extends AppCompatActivity {
     PostAdapter adapter;
     FloatingActionButton add,add2;
     Output op=new Output();
+    static File mFile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +50,7 @@ public class Upload_Activity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent pictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                File mFile=op.getOutputUri(IMAGE_CONST,Upload_Activity.this);
+                mFile=op.getOutputUri(IMAGE_CONST,Upload_Activity.this);
                 imageUri = Uri.fromFile(mFile);
                 if (imageUri == null) {
                     Toast.makeText(Upload_Activity.this, R.string.storage_access_error, Toast.LENGTH_SHORT).show();

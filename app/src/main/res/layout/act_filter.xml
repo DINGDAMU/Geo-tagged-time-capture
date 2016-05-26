@@ -12,10 +12,19 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="GET"
+        android:id="@+id/btn"
+        />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:text="FILTER"
         android:id="@+id/button"
+        android:onClick="filter"
         android:layout_marginTop="10dp"
-        android:onClick="filter"/>
+        android:layout_below="@+id/btn"
+
+        />
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -35,11 +44,20 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="Address here"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/listAddress"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/index"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="Time here"
         android:layout_centerHorizontal="true"
         android:id="@+id/listTime"
         android:layout_marginTop="10dp"
-        android:layout_below="@+id/index"
+        android:layout_below="@+id/listAddress"
         />
     <TextView
         android:layout_width="wrap_content"

@@ -305,7 +305,7 @@ public class Compass_camera_Activity extends Activity {
         }
     }
     //populates the list asynchronously
-    public class InsertTask extends AsyncTask<String,String,String> {
+    public class InsertTask extends AsyncTask<String,Integer,String> {
 
         @Override
         protected void onPreExecute() {
@@ -337,9 +337,10 @@ public class Compass_camera_Activity extends Activity {
 
 
             }
-
             return result;
         }
+
+
 
         //首先我们可能重写getView()，通过LayoutInflater的inflate方法映射一个自己定义的Layout布局xml加载或从xxxView中创建。
         //这些大家可能滚瓜烂熟了但是仍然很多Android开发者对于BaseAdapter中notifyDataSetChanged()方法不是很理解

@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -24,11 +25,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.squareup.picasso.Downloader;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.Base64;
+import com.loopj.android.http.RequestParams;
 import com.squareup.picasso.Picasso;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
@@ -42,9 +48,13 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+
+import cz.msebera.android.httpclient.Header;
 
 /**
  * Created by dingdamu on 23/05/16.
@@ -58,9 +68,11 @@ public class Network_painting_Activity extends AppCompatActivity {
     double latitude, longitude;
     String resultLatLong, resultAddr;
     Button mUpload, mCancel, mRetry;
+    Bitmap bitmap;
+    String updated;
 
-    public static final int CONNECTION_TIMEOUT=10000;
-    public static final int READ_TIMEOUT=15000;
+   // public static final int CONNECTION_TIMEOUT=10000;
+   // public static final int READ_TIMEOUT=15000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,17 +88,22 @@ public class Network_painting_Activity extends AppCompatActivity {
         mRetry = (Button) findViewById(R.id.retryButton);
         Time today = new Time(Time.getCurrentTimezone());
         today.setToNow();
-        final String updated = "Updated : " + today.monthDay + "-" + (today.month + 1) + "-" + today.year + "   " + today.format("%k:%M:%S");
+         updated = "Updated : " + today.monthDay + "-" + (today.month + 1) + "-" + today.year + "   " + today.format("%k:%M:%S");
 
         imageUri = getIntent().getData();
+        try{
+            bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
+
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
         mUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                new AsyncLogin().execute("ding1212121",imageUri.toString(),resultLatLong,resultAddr,updated);
-
-
-                Toast.makeText(Network_painting_Activity.this, "Uploaded new Post", Toast.LENGTH_SHORT).show();
+                //new AsyncLogin().execute("ding1212121",imageUri.toString(),resultLatLong,resultAddr,updated);
+                sendImage(bitmap);
                 Intent i = new Intent(Network_painting_Activity.this, Upload_Activity.class);
                 startActivity(i);
                 Network_painting_Activity.this.finish();
@@ -165,127 +182,7 @@ public class Network_painting_Activity extends AppCompatActivity {
         return false;
     }
 
-    private class AsyncLogin extends AsyncTask<String, String, String>
-    {
-        ProgressDialog pdLoading = new ProgressDialog(Network_painting_Activity.this);
-        HttpURLConnection conn;
-        URL url = null;
 
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-
-            //this method will be running on UI thread
-            pdLoading.setMessage("\tUploading...");
-            pdLoading.setCancelable(false);
-            pdLoading.show();
-
-        }
-        @Override
-        protected String doInBackground(String... params) {
-            try {
-
-                // Enter URL address where your php file resides
-                url = new URL("http://192.168.1.52/mysql.php");
-
-            } catch (MalformedURLException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-                return "exception";
-            }
-            try {
-                // Setup HttpURLConnection class to send and receive data from php and mysql
-                conn = (HttpURLConnection)url.openConnection();
-                conn.setReadTimeout(READ_TIMEOUT);
-                conn.setConnectTimeout(CONNECTION_TIMEOUT);
-                conn.setRequestMethod("POST");
-
-                // setDoInput and setDoOutput method depict handling of both send and receive
-                conn.setDoInput(true);
-                conn.setDoOutput(true);
-
-
-                // Append parameters to URL
-                Uri.Builder builder = new Uri.Builder()
-                        .appendQueryParameter("username", params[0])
-                        .appendQueryParameter("url",params[1])
-                        .appendQueryParameter("coordinates", params[2])
-                        .appendQueryParameter("address",params[3])
-                        .appendQueryParameter("time",params[4]);
-                String query = builder.build().getEncodedQuery();
-
-                // Open connection for sending data
-                OutputStream os = conn.getOutputStream();
-                BufferedWriter writer = new BufferedWriter(
-                        new OutputStreamWriter(os, "UTF-8"));
-                writer.write(query);
-                writer.flush();
-                writer.close();
-                os.close();
-                conn.connect();
-
-            } catch (IOException e1) {
-                // TODO Auto-generated catch block
-                e1.printStackTrace();
-                return "exception";
-            }
-
-            try {
-
-                int response_code = conn.getResponseCode();
-
-                // Check if successful connection made
-                if (response_code == HttpURLConnection.HTTP_OK) {
-
-                    // Read data sent from server
-
-
-                    // Pass data to onPostExecute method
-                    return "true";
-
-                }else{
-
-                    return("unsuccessful");
-                }
-
-            } catch (IOException e) {
-                e.printStackTrace();
-                return "exception";
-            } finally {
-                conn.disconnect();
-            }
-
-
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-
-            //this method will be running on UI thread
-
-            pdLoading.dismiss();
-
-            if(result.equalsIgnoreCase("true"))
-            {
-                /* Here launching another activity when login successful. If you persist login state
-                use sharedPreferences of Android. and logout button to clear sharedPreferences.
-                 */
-
-                Toast.makeText(Network_painting_Activity.this,"success!",Toast.LENGTH_SHORT).show();
-
-            }else if (result.equalsIgnoreCase("false")){
-
-                // If username and password does not match display a error message
-                Toast.makeText(Network_painting_Activity.this, "Invalid email or password", Toast.LENGTH_LONG).show();
-
-            } else if (result.equalsIgnoreCase("exception") || result.equalsIgnoreCase("unsuccessful")) {
-
-                Toast.makeText(Network_painting_Activity.this, "OOPs! Something went wrong. Connection Problem.", Toast.LENGTH_LONG).show();
-
-            }
-        }
-
-    }
     public class LocationTask extends AsyncTask<String,String,List<Address> > {
 
         private ProgressDialog pDialog;
@@ -362,5 +259,42 @@ public class Network_painting_Activity extends AppCompatActivity {
             }
         }
     }
+    private void sendImage(Bitmap bm)
+    {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bm.compress(Bitmap.CompressFormat.PNG, 60, stream);
+        InputStream isBm=new ByteArrayInputStream(stream.toByteArray());
+
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.setTimeout(6*1000);
+        RequestParams params = new RequestParams();
+        Date mCurrentDate = new Date();
+        String mTimestamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ITALY).format(mCurrentDate);
+        String filename=mTimestamp+".jpg";
+
+
+        params.put("attach", isBm,filename);
+
+            params.put("username","DAMU DING");
+            params.put("url","http://192.168.1.52/upload/"+filename);
+            params.put("coordinates",resultLatLong);
+            params.put("address",resultAddr);
+            params.put("time",updated);
+        client.post("http://192.168.1.52/upload.php", params, new AsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(int  statusCode, Header[] headers, byte[] bytes) {
+                Toast.makeText(Network_painting_Activity.this, "Upload success!", Toast.LENGTH_LONG).show();
+
+
+            }
+            @Override
+            public void onFailure(int  statusCode, Header[] headers, byte[] bytes, Throwable throwable) {
+                Toast.makeText(Network_painting_Activity.this, "Upload Fail!", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+
+
 
 }
