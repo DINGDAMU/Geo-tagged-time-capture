@@ -32,10 +32,10 @@ import cz.msebera.android.httpclient.Header;
 public class Login_Activity extends AppCompatActivity{
     private EditText LoginEmail;
     private EditText LoginPassword;
-    public static String name;
-    public static String email;
+    public  String name;
+    public String email;
     final String url="http://10.196.161.55/login_insert.php";
-    public static String profile_url;
+    public  static String profile_url;
     Button register;
     String email_check;
     String password_check;
@@ -103,6 +103,8 @@ public class Login_Activity extends AppCompatActivity{
                         SharedPreferences.Editor editor = mySharedPreferences.edit();
                         editor.putString("email", email);
                         editor.putString("password",password );
+                        editor.putString("profile_url",profile_url);
+                        editor.putString("username",name);
                         editor.apply();
 
 

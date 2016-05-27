@@ -278,7 +278,6 @@ public class Compass_camera_Activity extends Activity {
             imageUri = Uri.fromFile(mFile);
             String result;
             if (imageUri == null) {
-                Toast.makeText(Compass_camera_Activity.this, R.string.storage_access_error, Toast.LENGTH_SHORT).show();
                 result = "false";
             } else {
 

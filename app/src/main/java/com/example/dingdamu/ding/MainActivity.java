@@ -40,6 +40,9 @@ import java.util.Locale;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     NavigationView navigationView;
+    String email_check=null;
+    String name_check=null;
+    String profile_url_check=null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,14 +71,21 @@ public class MainActivity extends AppCompatActivity
 
        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        SharedPreferences sharedPreferences= getSharedPreferences("profile",
+                Activity.MODE_PRIVATE);
+        email_check =sharedPreferences.getString("email", "");
+        name_check=sharedPreferences.getString("username", "");
+        profile_url_check=sharedPreferences.getString("profile_url","");
+
+
         View headerView = navigationView.getHeaderView(0);
         TextView name_txt = (TextView) headerView.findViewById(R.id.id_username);
         TextView email_txt = (TextView) headerView.findViewById(R.id.email);
         ImageView profile=(ImageView)headerView.findViewById(R.id.imageView);
-        name_txt.setText(Login_Activity.name);
-        email_txt.setText(Login_Activity.email);
-        //Toast.makeText(MainActivity.this,Login_Activity.profile_url,Toast.LENGTH_SHORT).show();
-        Picasso.with(MainActivity.this).load(Login_Activity.profile_url).placeholder(R.mipmap.placeholder).resize(100,100).into(profile);
+        name_txt.setText(name_check);
+        email_txt.setText(email_check);
+        Picasso.with(MainActivity.this).load(profile_url_check).placeholder(R.mipmap.placeholder).resize(100,100).into(profile);
 
 
 

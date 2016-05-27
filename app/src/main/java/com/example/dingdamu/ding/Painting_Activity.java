@@ -62,7 +62,6 @@ public class Painting_Activity extends AppCompatActivity {
         final String updated = "Updated : "+today.monthDay+"-"+(today.month+1)+"-"+today.year+"   "+today.format("%k:%M:%S");
 
         imageUri = getIntent().getData();
-        //Toast.makeText(Painting_Activity.this,imageUri.toString(),Toast.LENGTH_SHORT).show();
         mSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -97,8 +97,9 @@ public class Network_painting_Activity extends AppCompatActivity {
 
         imageUri = getIntent().getData();
         try{
-            bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
-
+            if(imageUri!=null) {
+                bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
+            }
 
         }catch(Exception e){
             e.printStackTrace();
@@ -279,10 +280,12 @@ public class Network_painting_Activity extends AppCompatActivity {
         String mTimestamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ITALY).format(mCurrentDate);
         String filename=mTimestamp+".jpg";
 
-
+        SharedPreferences sharedPreferences= getSharedPreferences("profile",
+                Activity.MODE_PRIVATE);
+        String name_check=sharedPreferences.getString("username", "");
         params.put("attach", isBm,filename);
 
-        params.put("username",Login_Activity.name);
+        params.put("username",name_check);
             params.put("url",url_upload+filename);
             params.put("coordinates",resultLatLong);
             params.put("address",resultAddr);
