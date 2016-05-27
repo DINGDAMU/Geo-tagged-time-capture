@@ -256,9 +256,9 @@ public class Network_painting_Activity extends AppCompatActivity {
             }
             else {
                 String address = addresses.get(0).getAddressLine(0);
-                String city = addresses.get(0).getLocality();
-                String state = addresses.get(0).getAdminArea();
-                resultAddr = address + "\n" + city + ", " + state;
+                String city =  addresses.get(0).getAddressLine(1);
+                String state =  addresses.get(0).getAddressLine(2);
+                resultAddr = address + "," + city + ", " + state;
                 locationText.setText(resultLatLong);
                 addressText.setText(resultAddr);
                 service.removeUpdates();

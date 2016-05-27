@@ -23,6 +23,7 @@ public class Register_Activity extends AppCompatActivity {
     private EditText RegisterEmail;
     private EditText RegisterPassword;
     private EditText RegisterUsername;
+    private EditText  RegisterUrl;
     Button register;
 
     final String url="http://10.196.161.55/register.php";
@@ -36,6 +37,7 @@ public class Register_Activity extends AppCompatActivity {
         RegisterEmail=(EditText)findViewById(R.id.email);
         RegisterPassword=(EditText)findViewById(R.id.password);
         RegisterUsername=(EditText)findViewById(R.id.username);
+        RegisterUrl=(EditText)findViewById(R.id.profile_url);
         register=(Button) findViewById(R.id.register);
         register.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -59,6 +61,7 @@ public class Register_Activity extends AppCompatActivity {
         params.put("email",RegisterEmail.getText().toString());
         params.put("password",RegisterPassword.getText().toString() );
         params.put("username",RegisterUsername.getText().toString() );
+        params.put("profile_url",RegisterUrl.getText().toString());
         client.post(url, params, new TextHttpResponseHandler() {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {

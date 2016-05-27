@@ -35,7 +35,10 @@ public class Login_Activity extends AppCompatActivity{
     public static String name;
     public static String email;
     final String url="http://10.196.161.55/login_insert.php";
+    public static String profile_url;
     Button register;
+    String email_check;
+    String password_check;
 
 
     @Override
@@ -58,6 +61,11 @@ public class Login_Activity extends AppCompatActivity{
                 Login_Activity.this.finish();
             }
         });
+        SharedPreferences sharedPreferences= getSharedPreferences("profile",
+                Activity.MODE_PRIVATE);
+        email_check =sharedPreferences.getString("email", "");
+        password_check =sharedPreferences.getString("password", "");
+        RecheckLogin();
 
 
     }
@@ -89,6 +97,15 @@ public class Login_Activity extends AppCompatActivity{
                         JSONObject jp = array.getJSONObject(0);
                          name = jp.getString("username");
                          email = jp.getString("email");
+                        String password=jp.getString("password");
+                        profile_url=jp.getString("profile_url");
+                        SharedPreferences mySharedPreferences= getSharedPreferences("profile", Activity.MODE_PRIVATE);
+                        SharedPreferences.Editor editor = mySharedPreferences.edit();
+                        editor.putString("email", email);
+                        editor.putString("password",password );
+                        editor.apply();
+
+
 
 
 
@@ -120,5 +137,30 @@ public class Login_Activity extends AppCompatActivity{
             return true;
         }
         return false;
+    }
+    public void RecheckLogin(){
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.setTimeout(6*1000);
+        RequestParams params = new RequestParams();
+        params.put("email",email_check);
+        params.put("password", password_check);
+        client.post(url, params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int  statusCode, Header[] headers, JSONObject response) {
+                try{
+                    JSONArray array = response.getJSONArray("login");
+                    if(array.length()!=0){
+
+                        Intent intent = new Intent();
+                        intent.setClass(Login_Activity.this, MainActivity.class);
+                        startActivity(intent);
+                        Login_Activity.this.finish();
+                    }
+                }catch (JSONException e){
+                    e.printStackTrace();
+                }
+
+    }
+});
     }
 }

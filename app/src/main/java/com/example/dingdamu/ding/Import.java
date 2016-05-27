@@ -151,6 +151,7 @@ public class Import extends AppCompatActivity {
 
             Intent galleryAddIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
             galleryAddIntent.setData(imageUri);
+
             sendBroadcast(galleryAddIntent);
 
             Intent sendIntent = new Intent(Import.this,Painting_Activity.class);

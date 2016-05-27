@@ -124,7 +124,6 @@ public class Gallery_Activity extends AppCompatActivity {
             mBack.setVisibility(View.INVISIBLE);
             mNext.setVisibility(View.INVISIBLE);
         }
-        Gallery_Activity.this.finish();
 
 
 

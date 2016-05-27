@@ -16,7 +16,7 @@ public class LocationService extends Service implements LocationListener {
     LocationManager manager;
     Location location;
     private static final long MIN_DISTANCE_FOR_UPDATE = 10;
-    private static final long MIN_TIME_FOR_UPDATE = 1000 * 60 * 2;
+    private static final long MIN_TIME_FOR_UPDATE = 1000 * 10;
     LocationListener listener;
 
 

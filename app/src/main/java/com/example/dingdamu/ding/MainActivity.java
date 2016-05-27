@@ -2,8 +2,10 @@ package com.example.dingdamu.ding;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.PixelFormat;
 import android.hardware.Camera;
+import android.media.Image;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.design.widget.NavigationView;
@@ -24,6 +26,9 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.IOException;
@@ -34,7 +39,7 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
+    NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,8 +66,20 @@ public class MainActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+       navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        View headerView = navigationView.getHeaderView(0);
+        TextView name_txt = (TextView) headerView.findViewById(R.id.id_username);
+        TextView email_txt = (TextView) headerView.findViewById(R.id.email);
+        ImageView profile=(ImageView)headerView.findViewById(R.id.imageView);
+        name_txt.setText(Login_Activity.name);
+        email_txt.setText(Login_Activity.email);
+        //Toast.makeText(MainActivity.this,Login_Activity.profile_url,Toast.LENGTH_SHORT).show();
+        Picasso.with(MainActivity.this).load(Login_Activity.profile_url).placeholder(R.mipmap.placeholder).resize(100,100).into(profile);
+
+
+
+
     }
 
     @Override
@@ -91,9 +108,16 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            SharedPreferences mySharedPreferences= getSharedPreferences("profile", Activity.MODE_PRIVATE);
+            SharedPreferences.Editor editor = mySharedPreferences.edit();
+            editor.putString("email", "");
+            editor.putString("password","");
+            editor.apply();
             Intent intent = new Intent();
             intent.setClass(MainActivity.this, Login_Activity.class);
-            startActivity(intent);        }
+            startActivity(intent);
+            MainActivity.this.finish();
+                  }
 
         return super.onOptionsItemSelected(item);
     }
