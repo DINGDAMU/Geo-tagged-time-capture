@@ -65,6 +65,8 @@ public class Filter_Activity extends Activity {
     double latitude, longitude;
     List<Address> addresses;
     Button get;
+    final String url="http://10.196.161.55/sql_select.php";
+
 
 
 
@@ -180,7 +182,7 @@ public class Filter_Activity extends Activity {
 
     public void filter(View arg0) {
 
-        if (resultAddr!=null) {
+        if (resultAddr!=null&&isNetworkAvailable()) {
             address_text.setText(resultAddr);
             requestjsonarray();
         } else {
@@ -194,7 +196,7 @@ public class Filter_Activity extends Activity {
         AsyncHttpClient client = new AsyncHttpClient();
         RequestParams params = new RequestParams();
         params.put("address", resultAddr);
-        client.post("http://192.168.1.52/sql_select.php", params, new JsonHttpResponseHandler() {
+        client.post(url, params, new JsonHttpResponseHandler() {
             @Override
                     public void onSuccess(int  statusCode, Header[] headers,JSONObject response) {
                 try {

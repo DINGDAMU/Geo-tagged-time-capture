@@ -1,8 +1,10 @@
 package com.example.dingdamu.ding;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.location.Address;
@@ -70,8 +72,11 @@ public class Network_painting_Activity extends AppCompatActivity {
     Button mUpload, mCancel, mRetry;
     Bitmap bitmap;
     String updated;
+    final String url="http://10.196.161.55/upload.php";
+    final String url_upload="http://10.196.161.55/upload/";
 
-   // public static final int CONNECTION_TIMEOUT=10000;
+
+    // public static final int CONNECTION_TIMEOUT=10000;
    // public static final int READ_TIMEOUT=15000;
 
     @Override
@@ -101,12 +106,14 @@ public class Network_painting_Activity extends AppCompatActivity {
         mUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                //new AsyncLogin().execute("ding1212121",imageUri.toString(),resultLatLong,resultAddr,updated);
-                sendImage(bitmap);
-                Intent i = new Intent(Network_painting_Activity.this, Upload_Activity.class);
-                startActivity(i);
-                Network_painting_Activity.this.finish();
+                if(isNetworkAvailable()) {
+                    sendImage(bitmap);
+                    Intent i = new Intent(Network_painting_Activity.this, Upload_Activity.class);
+                    startActivity(i);
+                    Network_painting_Activity.this.finish();
+                }else{
+                    Toast.makeText(Network_painting_Activity.this,"Please connect the Internet!",Toast.LENGTH_SHORT).show();
+                }
 
             }
         });
@@ -176,7 +183,7 @@ public class Network_painting_Activity extends AppCompatActivity {
                 getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = cm.getActiveNetworkInfo();
 
-        if (networkInfo.isConnected()) {
+        if (networkInfo!=null&&networkInfo.isConnected()) {
             return true;
         }
         return false;
@@ -275,12 +282,12 @@ public class Network_painting_Activity extends AppCompatActivity {
 
         params.put("attach", isBm,filename);
 
-            params.put("username","DAMU DING");
-            params.put("url","http://192.168.1.52/upload/"+filename);
+        params.put("username",Login_Activity.name);
+            params.put("url",url_upload+filename);
             params.put("coordinates",resultLatLong);
             params.put("address",resultAddr);
             params.put("time",updated);
-        client.post("http://192.168.1.52/upload.php", params, new AsyncHttpResponseHandler() {
+        client.post(url, params, new AsyncHttpResponseHandler() {
             @Override
             public void onSuccess(int  statusCode, Header[] headers, byte[] bytes) {
                 Toast.makeText(Network_painting_Activity.this, "Upload success!", Toast.LENGTH_LONG).show();
@@ -293,6 +300,8 @@ public class Network_painting_Activity extends AppCompatActivity {
             }
         });
     }
+
+
 
 
 
