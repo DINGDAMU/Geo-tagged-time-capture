@@ -34,7 +34,7 @@ public class Login_Activity extends AppCompatActivity{
     private EditText LoginPassword;
     public  String name;
     public String email;
-    final String url="http://10.196.161.55/login_insert.php";
+    final String url="https://php-dingdamu.rhcloud.com/login_insert.php";
     public  static String profile_url;
     Button register;
     String email_check;

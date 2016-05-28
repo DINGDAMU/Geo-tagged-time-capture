@@ -3,11 +3,14 @@ package com.example.dingdamu.ding;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.graphics.PixelFormat;
 import android.hardware.Camera;
 import android.media.Image;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -28,21 +31,36 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.RequestParams;
+import com.loopj.android.http.TextHttpResponseHandler;
 import com.squareup.picasso.Picasso;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import cz.msebera.android.httpclient.Header;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     NavigationView navigationView;
-    String email_check=null;
-    String name_check=null;
-    String profile_url_check=null;
+     String email_check;
+    String name_check;
+    String profile_url_check;
+    final int gallery_const=2;
+     ImageView profile;
+    Bitmap bitmap;
+    final String url="https://php-dingdamu.rhcloud.com/update.php";
+
+    final String url_profile="https://php-dingdamu.rhcloud.com/profile/";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,12 +100,20 @@ public class MainActivity extends AppCompatActivity
         View headerView = navigationView.getHeaderView(0);
         TextView name_txt = (TextView) headerView.findViewById(R.id.id_username);
         TextView email_txt = (TextView) headerView.findViewById(R.id.email);
-        ImageView profile=(ImageView)headerView.findViewById(R.id.imageView);
+        profile=(ImageView)headerView.findViewById(R.id.imageView);
         name_txt.setText(name_check);
         email_txt.setText(email_check);
-        Picasso.with(MainActivity.this).load(profile_url_check).placeholder(R.mipmap.placeholder).resize(100,100).into(profile);
+        if(profile_url_check!=null&&profile_url_check.trim().length() != 0) {
+           Picasso.with(MainActivity.this).load(profile_url_check).placeholder(R.mipmap.placeholder).resize(100, 100).into(profile);
 
-
+        }
+        profile.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(intent, gallery_const);
+            }
+        });
 
 
     }
@@ -175,7 +201,59 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_OK&& data != null) {
+            Uri selectedImage = data.getData();
+            try {
+                if (selectedImage != null) {
+                    Picasso.with(MainActivity.this).load(selectedImage.toString()).placeholder(R.mipmap.placeholder).resize(100, 100).into(profile);
+                    bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
+                    update_profile(bitmap);
 
+                }
+            }catch (IOException e){
+                e.printStackTrace();
+        }
+        }
+
+    }
+    public void update_profile(Bitmap bm){
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bm.compress(Bitmap.CompressFormat.PNG, 60, stream);
+        InputStream isBm=new ByteArrayInputStream(stream.toByteArray());
+        String filename=email_check+".jpg";
+
+
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.setTimeout(6*1000);
+        RequestParams params = new RequestParams();
+        params.put("attach", isBm,filename);
+        params.put("profile_url",url_profile+filename);
+        params.put("email",email_check);
+        client.post(url, params, new TextHttpResponseHandler() {
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                String alarm = "Check your connection with the server!";
+                Toast.makeText(MainActivity.this, alarm, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                if(statusCode==200){
+                    String update="You are successful to update your profile!";
+                    Toast.makeText(MainActivity.this,update,Toast.LENGTH_SHORT).show();
+                }else{
+                    String alarm="Please retry to upload your profile!";
+                    Toast.makeText(MainActivity.this,alarm,Toast.LENGTH_SHORT).show();
+
+                }
+
+            }
+        });
+
+    }
 
 
 

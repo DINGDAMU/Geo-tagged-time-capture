@@ -72,8 +72,8 @@ public class Network_painting_Activity extends AppCompatActivity {
     Button mUpload, mCancel, mRetry;
     Bitmap bitmap;
     String updated;
-    final String url="http://10.196.161.55/upload.php";
-    final String url_upload="http://10.196.161.55/upload/";
+    final String url="https://php-dingdamu.rhcloud.com/upload.php";
+    final String url_upload="https://php-dingdamu.rhcloud.com/upload/";
 
 
     // public static final int CONNECTION_TIMEOUT=10000;

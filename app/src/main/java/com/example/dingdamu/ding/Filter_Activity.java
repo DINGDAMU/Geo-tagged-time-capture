@@ -65,7 +65,7 @@ public class Filter_Activity extends Activity {
     double latitude, longitude;
     List<Address> addresses;
     Button get;
-    final String url="http://10.196.161.55/sql_select.php";
+    final String url="https://php-dingdamu.rhcloud.com/sql_select.php";
 
 
 
