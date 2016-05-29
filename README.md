@@ -1,6 +1,6 @@
 #How to use "Geo-tagged_time_capture"?
 
-- ##Login and Register 
+-Login and Register 
  
  
 ####Users can register with username,email,password and upload one profile photo. 
