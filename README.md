@@ -25,7 +25,7 @@
 ##Compass camera(To use it,your mobile phone must be rooted first)
  
  
-#### In the compass camera, on the top-left you can find three parameters of the compass:Azimuth,Pitch and Roll. 
+####In the compass camera, on the top-left you can find three parameters of the compass:Azimuth,Pitch and Roll. 
 ####In the center is the transparent compass,under which it's the camera preview.
  ---
 
@@ -33,11 +33,11 @@
 
  
 #### After taking the photo with the camera, you will see a 100*100 sized photo,and the information(time,coordinates,address) under it. 
-###If you can't get your location with GPS, please open the mobile phone's GPS and go outside of the building to retry it.
+####If you can't get your location with GPS, please open the mobile phone's GPS and go outside of the building to retry it.
 ---
 
 ####Once you get the Location, you can save your photo to the mobile phone, and all its dates would be stored in the SQLite database.
-### For instance, they will be used in the Local-filter part.
+#### For instance, they will be used in the Local-filter part.
 
 ---
 
@@ -45,7 +45,7 @@
  
  
 ####Simple part, just help you to take your location directly.
-###Every 10 seconds you can try one time. Remember that don't use it continuously, it may lead the ANR(Application not response). 
+####Every 10 seconds you can try one time. Remember that don't use it continuously, it may lead the ANR(Application not response). 
 ####Use it when you really need it(Open the GPS,and stay outside!).
 ---
 
@@ -53,8 +53,8 @@
 
  
 ####This filter will help you to filter your local images with location.
-### It could be used only when you get your location. In addition, once you get the location, it will show all the photos at this location.
-### The photos are in chronological order, and you can use button "BACK" or "NEXT" to look at previous  photo or next photo.
+#### It could be used only when you get your location. In addition, once you get the location, it will show all the photos at this location.
+#### The photos are in chronological order, and you can use button "BACK" or "NEXT" to look at previous  photo or next photo.
 ---
 ##Compass
  
@@ -71,7 +71,7 @@
 
  
 ####Now this is the network filter.
-###You can look at all the people uploaded photo at this place. What's more than Local-filter, you can look at who uploaded this photo.
+####You can look at all the people uploaded photo at this place. What's more than Local-filter, you can look at who uploaded this photo.
 
  
  
