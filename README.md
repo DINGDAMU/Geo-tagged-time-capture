@@ -1,3 +1,14 @@
+#How to install "Geo-tagged_time_capture"?
+
+#### git clone https://github.com/DINGDAMU/Geo-tagged-time-capture.git
+#### and build it with Android Studio
+#### or simply install the .apk in the apk folder 
+
+
+
+
+
+
 #How to use "Geo-tagged_time_capture"?
 
 ##Login and Register 
