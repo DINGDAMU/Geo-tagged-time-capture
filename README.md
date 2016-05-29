@@ -5,7 +5,7 @@
  
 ####Users can register with username,email,password and upload one profile photo. 
 ####These dates will be transmitted to the Mysql server through the PHP. 
-###Then you can login with your email and password. If you don't change your password or logout, next time you will login automatically.
+####Then you can login with your email and password. If you don't change your password or logout, next time you will login automatically.
 ####On the top-right menu you can choose to logout.
 ####After login, the username,email,profile photo will be shown in the nav_header of the navigationView.
  ---
