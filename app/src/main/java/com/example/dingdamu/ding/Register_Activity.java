@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -13,7 +12,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.loopj.android.http.TextHttpResponseHandler;
 
@@ -27,11 +25,12 @@ import cz.msebera.android.httpclient.Header;
 /**
  * Created by dingdamu on 27/05/16.
  */
+
 public class Register_Activity extends AppCompatActivity {
     private EditText RegisterEmail;
     private EditText RegisterPassword;
     private EditText RegisterUsername;
-    private Button  RegisterUrl;
+     Button  RegisterUrl;
     Button register;
     final int gallery_const=2;
     Uri selectedImage;
@@ -77,7 +76,9 @@ public class Register_Activity extends AppCompatActivity {
 
     }
     public void register(Bitmap bm){
-        if (bm != null) {
+        if (bm == null) {
+            Toast.makeText(Register_Activity.this, "Please upload one photo as your profile", Toast.LENGTH_SHORT).show();
+        }else{
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             bm.compress(Bitmap.CompressFormat.PNG, 60, stream);
             InputStream isBm = new ByteArrayInputStream(stream.toByteArray());

@@ -1,6 +1,5 @@
 package com.example.dingdamu.ding;
 
-import android.net.Uri;
 import android.os.Environment;
 import android.widget.Toast;
 import android.content.Context;
