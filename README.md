@@ -1,7 +1,8 @@
 #How to use "Geo-tagged_time_capture"?
 
 - Login and Register 
- ---
+ 
+---
  
 ####Users can register with username,email,password and upload one profile photo. 
 ####These dates will be transmitted to the Mysql server through the PHP. 
