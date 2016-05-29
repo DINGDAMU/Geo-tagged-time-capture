@@ -10,7 +10,7 @@
     <string name="title_activity_position">Location</string>
     <string name="title_activity_compass">Compass</string>
     <string name="title_activity_compass_camera">Compass_camera</string>
-    <string name="title_activity_filter">Filter</string>
+    <string name="title_activity_filter">Network-filter</string>
     <string name="title_activity_upload">Upload</string>
     <string name="title_activity_Network">Network_Drawing</string>
     <string name="title_activity_Network_compass">Compass_camera</string>
