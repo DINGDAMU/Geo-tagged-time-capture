@@ -258,6 +258,9 @@ public class Network_painting_Activity extends AppCompatActivity {
 
         AsyncHttpClient client = new AsyncHttpClient();
         client.setTimeout(6*1000);
+        client.setConnectTimeout(6*1000);
+        client.setResponseTimeout(6*1000);
+        client.setMaxRetriesAndTimeout(1,100);
         RequestParams params = new RequestParams();
         Date mCurrentDate = new Date();
         String mTimestamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ITALY).format(mCurrentDate);

@@ -212,6 +212,9 @@ public class MainActivity extends AppCompatActivity
 
         AsyncHttpClient client = new AsyncHttpClient();
         client.setTimeout(6*1000);
+        client.setConnectTimeout(6*1000);
+        client.setResponseTimeout(6*1000);
+        client.setMaxRetriesAndTimeout(1,100);
         RequestParams params = new RequestParams();
         params.put("attach", isBm,filename);
         params.put("profile_url",url_profile+filename);
