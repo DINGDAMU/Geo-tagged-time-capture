@@ -65,7 +65,7 @@
  
  
 ####This part allows you to take photos like 'Import' part,but it will upload your photos to the server. 
-###All the related information, like coordinates,uploader,time,address will be stored in the Mysql.
+####All the related information, like coordinates,uploader,time,address will be stored in the Mysql.
 ---
 ##Network-filter
 
