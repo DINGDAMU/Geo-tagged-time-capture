@@ -40,7 +40,7 @@
         android:ems="10"
         android:id="@+id/profile_url"
         android:layout_below="@+id/password"
-        android:hint="Upload profile"
+        android:hint="Upload profile’s photo"
         android:layout_marginTop="10dp"/>
 
 
