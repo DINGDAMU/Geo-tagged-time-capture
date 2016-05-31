@@ -205,7 +205,7 @@ public class MainActivity extends AppCompatActivity
     }
     public void update_profile(Bitmap bm){
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bm.compress(Bitmap.CompressFormat.PNG, 60, stream);
+        bm.compress(Bitmap.CompressFormat.PNG, 0, stream);
         InputStream isBm=new ByteArrayInputStream(stream.toByteArray());
         String filename=email_check+".jpg";
 

@@ -253,7 +253,7 @@ public class Network_painting_Activity extends AppCompatActivity {
     private void sendImage(Bitmap bm)
     {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bm.compress(Bitmap.CompressFormat.PNG, 60, stream);
+        bm.compress(Bitmap.CompressFormat.PNG, 40, stream);
         InputStream isBm=new ByteArrayInputStream(stream.toByteArray());
 
         AsyncHttpClient client = new AsyncHttpClient();

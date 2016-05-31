@@ -80,7 +80,7 @@ public class Register_Activity extends AppCompatActivity {
             Toast.makeText(Register_Activity.this, "Please upload one photo as your profile", Toast.LENGTH_SHORT).show();
         }else{
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            bm.compress(Bitmap.CompressFormat.PNG, 60, stream);
+            bm.compress(Bitmap.CompressFormat.PNG, 0, stream);
             InputStream isBm = new ByteArrayInputStream(stream.toByteArray());
             String filename = RegisterEmail.getText().toString() + ".jpg";
 
