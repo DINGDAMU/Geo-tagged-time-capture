@@ -1,3 +1,7 @@
+#Geo-tagged_time_capture
+![image](http://php-dingdamu.rhcloud.com/structure.png)
+
+
 #How to install "Geo-tagged_time_capture"?
 
 #### git clone https://github.com/DINGDAMU/Geo-tagged-time-capture.git
@@ -6,9 +10,11 @@
 
 ---
 
+#Structure
 
+![image](http://php-dingdamu.rhcloud.com/QQ20160530-0.png)
 
-
+---
 
 
 
