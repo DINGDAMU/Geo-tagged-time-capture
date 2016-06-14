@@ -21,6 +21,8 @@ import android.widget.Toast;
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Created by dingdamu on 11/05/16.
@@ -47,7 +49,7 @@ public class GetyourPosition_Activity extends AppCompatActivity {
                     String alarm = "Please connect the internet!";
                     Toast.makeText(GetyourPosition_Activity.this, alarm, Toast.LENGTH_SHORT).show();
                 } else {
-            new PositionTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    new PositionTask().execute();
                 }
             }
         });
@@ -92,6 +94,14 @@ public class GetyourPosition_Activity extends AppCompatActivity {
 
 
             if (gpsLocation != null) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        get.setVisibility(View.INVISIBLE);
+
+//stuff that updates ui
+                    }
+                });
 
 
                 latitude = gpsLocation.getLatitude();
@@ -99,6 +109,7 @@ public class GetyourPosition_Activity extends AppCompatActivity {
                 resultLatLong = "Latitude: " + gpsLocation.getLatitude() +
                         " Longitude: " + gpsLocation.getLongitude();
                 geocoder = new Geocoder(GetyourPosition_Activity.this, Locale.getDefault());
+
 
                 try {
                     addresses = geocoder.getFromLocation(latitude, longitude, 1);
@@ -110,11 +121,8 @@ public class GetyourPosition_Activity extends AppCompatActivity {
 
 
             }
-            if(isCancelled()) {
-                return null;
-            }
-            Looper.myLooper().quit();
 
+                Looper.myLooper().quit();
 
             return null;
 
@@ -135,7 +143,7 @@ public class GetyourPosition_Activity extends AppCompatActivity {
 
             if (addresses == null) {
                 Toast.makeText(GetyourPosition_Activity.this, "Could not get location !Please retry in "+Utils.clicktime/1000+" seconds!", Toast.LENGTH_SHORT).show();
-                get.setVisibility(View.INVISIBLE);
+                get.setVisibility(View.VISIBLE);
                 service.removeUpdates();
                 service.unregisterlistener();
             } else {
@@ -145,7 +153,6 @@ public class GetyourPosition_Activity extends AppCompatActivity {
                 String state = addresses.get(0).getAddressLine(2);
                 resultAddr = address + "," + city + ", " + state;
 
-                get.setVisibility(View.INVISIBLE);
                 locationText.setText(resultLatLong);
                 addressText.setText(resultAddr);
                 service.removeUpdates();

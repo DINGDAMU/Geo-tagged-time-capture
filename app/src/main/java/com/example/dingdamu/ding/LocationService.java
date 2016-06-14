@@ -33,7 +33,7 @@ public class LocationService extends Service implements LocationListener {
                     return location;
                 }
             } catch (SecurityException e) {
-
+                e.printStackTrace();
             }
         }
         return null;
