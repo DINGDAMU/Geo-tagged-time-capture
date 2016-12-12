@@ -1,5 +1,5 @@
 #Geo-tagged_time_capture
-![image](http://php-dingdamu.rhcloud.com/structure.png)
+![image](http://dingdamu.byethost14.com/images/structure.png)
 
 
 #How to install "Geo-tagged_time_capture"?
@@ -12,7 +12,7 @@
 
 #Structure
 
-![image](http://php-dingdamu.rhcloud.com/QQ20160530-0.png)
+![image](http://dingdamu.byethost14.com/images/QQ20160530-0.png)
 
 ---
 
