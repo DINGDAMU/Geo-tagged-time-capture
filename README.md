@@ -1,5 +1,5 @@
 #Geo-tagged_time_capture
-![image](http://dingdamu.byethost14.com/images/structure.png)
+![image](https://github.com/DINGDAMU/Geo-tagged-time-capture/blob/master/structure.png)
 
 
 #How to install "Geo-tagged_time_capture"?
@@ -12,7 +12,7 @@
 
 #Structure
 
-![image](http://dingdamu.byethost14.com/images/QQ20160530-0.png)
+![image](https://github.com/DINGDAMU/Geo-tagged-time-capture/blob/master/QQ20160530-0.png)
 
 ---
 
