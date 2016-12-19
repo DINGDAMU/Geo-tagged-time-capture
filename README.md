@@ -3,6 +3,14 @@
 #[Project description](https://github.com/DINGDAMU/Geo-tagged-time-capture/blob/master/Geo-tagged%20time%20capture.pdf)
 
 
+
+
+
+
+
+
+
+
 #How to install "Geo-tagged_time_capture"?
 
 #### git clone https://github.com/DINGDAMU/Geo-tagged-time-capture.git
